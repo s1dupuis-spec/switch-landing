@@ -346,5 +346,9 @@
   </div>
 </footer>
 
+<script>
+function _swH(){parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*");}
+window.addEventListener("load",_swH);window.addEventListener("resize",_swH);setInterval(_swH,800);
+</script>
 </body>
 </html>
