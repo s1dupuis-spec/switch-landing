@@ -417,6 +417,24 @@
   </div>
 </footer>
 
+<script>
+/* Scroll des ancres (#form) — fonctionne en page normale ET dans un iframe pleine hauteur (GHL). */
+document.addEventListener('click', function(ev){
+  var a = ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+  if(!a) return;
+  var id = a.getAttribute('href').slice(1);
+  if(!id) return;
+  var el = document.getElementById(id);
+  if(!el) return;
+  ev.preventDefault();
+  var top = el.getBoundingClientRect().top + window.scrollY;
+  if(window.self !== window.top){
+    parent.postMessage({ switchScrollTo: top }, '*');   // iframe → on délègue au parent
+  } else {
+    window.scrollTo({ top: top, behavior: 'smooth' });   // page normale
+  }
+});
+</script>
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
 <script>
 function _swH(){parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*");}
