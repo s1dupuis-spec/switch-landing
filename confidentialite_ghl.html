@@ -1,0 +1,269 @@
+<!-- ============================================================
+     SWITCH · Politique de confidentialité v1.1 — bloc à coller
+     dans un élément "Custom Code / HTML" GHL (page vide, pleine
+     largeur, sans padding).
+     ============================================================ -->
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --blue:#2e9fe0; --blue-soft:#7fc0ec;
+    --white:#f4f7fa; --grey:#6b7787; --txt:#aeb8c4;
+    --line:rgba(255,255,255,0.12); --box:rgba(255,255,255,0.035);
+    --bg:#080b11;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:
+      radial-gradient(120% 40% at 88% 0%, rgba(46,120,180,0.30), rgba(10,14,20,0) 46%),
+      var(--bg);
+    background-attachment:fixed;
+    color:var(--white);
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--blue); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  .mono{ font-family:"Menlo","SF Mono",ui-monospace,monospace; }
+  .blue{ color:var(--blue); }
+  .grey{ color:var(--grey); }
+
+  /* ---- NAV ---- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 7vw; border-bottom:1px solid var(--line);
+    background:rgba(8,11,17,0.82); backdrop-filter:blur(12px);
+  }
+  .wm{ color:var(--blue); font-weight:800; font-size:19px; letter-spacing:3px; }
+  .nav .ver{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; color:var(--grey); letter-spacing:2px; }
+
+  /* ---- LAYOUT ---- */
+  .wrap{ max-width:880px; margin:0 auto; padding:0 7vw; }
+
+  /* ---- HERO ---- */
+  .hero{ padding:90px 0 64px; border-bottom:1px solid var(--line); }
+  .doctag{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:4px; color:var(--blue); text-transform:uppercase; }
+  .hero h1{ font-weight:800; font-size:clamp(46px,8vw,82px); line-height:0.98; letter-spacing:-2px; margin-top:26px; }
+  .hero h1 .pt{ color:var(--blue); }
+  .hero .sub{ font-size:clamp(19px,2.4vw,24px); line-height:1.5; color:var(--txt); margin-top:30px; max-width:640px; }
+  .hero .sub b{ color:var(--white); font-weight:600; }
+  .hero .stamp{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; color:var(--grey); letter-spacing:2px; margin-top:34px; }
+
+  /* ---- SECTIONS ---- */
+  section{ padding:58px 0; border-bottom:1px solid var(--line); }
+  .eyebrow{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:3px; color:var(--blue); text-transform:uppercase; }
+  section h2{ font-weight:800; font-size:clamp(28px,4vw,42px); line-height:1.05; letter-spacing:-1px; margin:18px 0 6px; }
+  .kick{ font-size:16px; color:var(--grey); letter-spacing:0.5px; margin-bottom:26px; }
+  section h3{ font-weight:700; font-size:22px; color:var(--blue); margin:34px 0 14px; }
+  p{ font-size:18px; line-height:1.62; color:var(--txt); margin-top:18px; }
+  p b, li b{ color:var(--white); font-weight:600; }
+  p:first-of-type{ margin-top:0; }
+
+  /* numbered + bullet lists */
+  ul.b, ol.n{ list-style:none; margin-top:20px; }
+  ul.b li{ position:relative; padding-left:30px; font-size:18px; line-height:1.55; color:var(--txt); margin-bottom:14px; }
+  ul.b li::before{ content:""; position:absolute; left:6px; top:11px; width:7px; height:7px; background:var(--blue); border-radius:50%; }
+  ol.n{ counter-reset:i; }
+  ol.n li{ counter-increment:i; position:relative; padding-left:54px; font-size:18px; line-height:1.55; color:var(--txt); margin-bottom:18px; }
+  ol.n li::before{ content:counter(i,decimal-leading-zero); position:absolute; left:0; top:1px; font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:15px; color:var(--blue); letter-spacing:1px; }
+
+  /* callout */
+  .callout{ background:var(--box); border-left:4px solid var(--blue); padding:24px 28px; margin-top:26px; border-radius:5px; }
+  .callout .clabel{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:14px; }
+  .callout p{ color:var(--white); margin-top:14px; }
+  .callout p:first-of-type{ margin-top:0; }
+
+  /* tables */
+  table{ width:100%; border-collapse:collapse; margin-top:24px; font-size:17px; }
+  th,td{ text-align:left; padding:16px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:12px; letter-spacing:2px; color:var(--grey); text-transform:uppercase; font-weight:400; }
+  td{ color:var(--txt); }
+  td b{ color:#fff; font-weight:600; }
+
+  /* ---- FOOTER ---- */
+  footer{ padding:64px 7vw 80px; }
+  footer .fwrap{ max-width:880px; margin:0 auto; }
+  footer .fwm{ color:var(--blue); font-weight:800; font-size:18px; letter-spacing:3px; }
+  footer .fline{ font-size:14px; color:var(--grey); margin-top:10px; }
+  .fnav{ display:flex; flex-wrap:wrap; gap:10px 26px; margin-top:30px; font-size:15px; }
+  .legal{ font-size:13px; line-height:1.7; color:var(--grey); margin-top:36px; padding-top:30px; border-top:1px solid var(--line); }
+  .src{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:11px; color:rgba(107,119,135,0.7); letter-spacing:1px; margin-top:24px; }
+
+  /* ---- PRINT / PDF ---- */
+  @media print{
+    .nav{ position:static; backdrop-filter:none; }
+    .hero{ padding-top:40px; }
+    section{ padding:40px 0; }
+    .callout, table{ break-inside:avoid; page-break-inside:avoid; }
+    section h2, section h3{ break-after:avoid; page-break-after:avoid; }
+    ul.b li, ol.n li{ break-inside:avoid; page-break-inside:avoid; }
+    a{ color:var(--blue-soft); }
+  }
+</style>
+
+<nav class="nav">
+  <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
+  <span class="ver">CONFIDENTIALITÉ · v1.1 · JUIN 2026</span>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="doctag">Document légal · protection des données</div>
+    <h1>Politique de<br>confidentialité<span class="pt">.</span></h1>
+    <p class="sub">Ce que SWITCH collecte, ce qu'on en fait, ce qu'on n'en fait pas. <b>Sans jargon. Sans détour. Tu lis, tu sais.</b></p>
+    <div class="stamp">Mise à jour · juin 2026 · v1.1</div>
+  </header>
+
+  <!-- 01 -->
+  <section>
+    <div class="eyebrow">01 · Le cadre</div>
+    <h2>Qui, quoi, pourquoi</h2>
+    <p>SWITCH (« <b>SWITCH</b> », « <b>nous</b> », « <b>notre</b> ») est un protocole de coaching en performance et reprogrammation identitaire opéré au Québec sous le nom commercial Programme SWITCH par Sébastien Dupuis. Le site <a href="https://switchyourmind.ca">switchyourmind.ca</a> et tous ses outils d'acquisition sont régis par la présente politique.</p>
+    <p>Cette politique respecte la <b>Loi sur la protection des renseignements personnels dans le secteur privé du Québec (Loi 25)</b> et la <b>Loi sur la protection des renseignements personnels et les documents électroniques du Canada (LPRPDE)</b>.</p>
+    <p>En utilisant nos services, en remplissant un formulaire ou en nous contactant, tu acceptes les pratiques décrites ci-dessous.</p>
+  </section>
+
+  <!-- 02 -->
+  <section>
+    <div class="eyebrow">02 · Ce qu'on collecte</div>
+    <h2>Données reçues, rien de plus</h2>
+
+    <h3>Informations personnelles · transmises par toi</h3>
+    <ul class="b">
+      <li>Prénom, nom, courriel, numéro de téléphone, ville.</li>
+      <li>Profil professionnel (rôle, secteur, années d'activité, CA annuel par tranche).</li>
+      <li>Réponses au formulaire de qualification (durée du plafond, capacité opérationnelle, capacité financière, disponibilité).</li>
+      <li>Toute information que tu nous transmets volontairement par courriel, téléphone ou messagerie.</li>
+    </ul>
+
+    <h3>Informations de paiement · jamais stockées par SWITCH</h3>
+    <p>Les paiements sont traités par <b>Stripe</b>, prestataire sécurisé conforme PCI-DSS niveau 1. Aucune information de carte bancaire ne transite par nos serveurs ni n'est conservée par SWITCH.</p>
+
+    <h3>Données techniques · collectées automatiquement</h3>
+    <ul class="b">
+      <li>Adresse IP, type de navigateur, système d'exploitation.</li>
+      <li>Pages visitées, durée de visite, source de trafic (cookies analytiques).</li>
+      <li>Identifiants techniques nécessaires au fonctionnement du site.</li>
+    </ul>
+  </section>
+
+  <!-- 03 -->
+  <section>
+    <div class="eyebrow">03 · Ce qu'on en fait</div>
+    <h2>Utilisations strictes</h2>
+    <p>Tes données servent à 4 usages précis. Aucun autre.</p>
+    <ol class="n">
+      <li>Te transmettre le formulaire de qualification approfondie après ton opt-in initial.</li>
+      <li>Évaluer si ton profil correspond au protocole SWITCH et te répondre sous 24 h ouvrables (lien de réservation ou orientation honnête).</li>
+      <li>T'envoyer des confirmations, rappels, notifications opérationnelles liées à ton parcours (Audit d'Architecture, programme, audits 1:1).</li>
+      <li>Améliorer nos services et notre éditorial à partir de données agrégées et anonymisées.</li>
+    </ol>
+    <p>SWITCH n'utilise jamais tes données pour des fins de profilage commercial agressif, de vente à des tiers, ou de manipulation algorithmique.</p>
+  </section>
+
+  <!-- 04 -->
+  <section>
+    <div class="eyebrow">04 · Consentement SMS · A2P 10DLC</div>
+    <h2>Conformité réglementaire nord-américaine</h2>
+    <p>En fournissant ton numéro de téléphone, tu consens à recevoir des messages SMS de la part de SWITCH, limités à 3 catégories :</p>
+    <ul class="b">
+      <li>Rappels et confirmations de rendez-vous (Audit d'Architecture, audits 1:1).</li>
+      <li>Informations opérationnelles directement liées à ton parcours SWITCH.</li>
+      <li>Messages occasionnels concernant l'évolution du protocole ou nouvelles cohortes (fréquence maximale · 1 par mois).</li>
+    </ul>
+    <div class="callout">
+      <div class="clabel">Tes contrôles · réversibles à tout moment</div>
+      <p><b>STOP</b> · réponds STOP à n'importe quel SMS pour te désabonner immédiatement.</p>
+      <p><b>HELP</b> · réponds HELP pour obtenir de l'aide et un contact direct.</p>
+      <p class="grey" style="font-size:15px;">Des frais standards de messagerie et de données peuvent s'appliquer selon ton opérateur.</p>
+    </div>
+    <p>SWITCH ne vend pas, ne loue pas et ne partage pas ton numéro de téléphone ni tes informations personnelles avec des tiers à des fins marketing. Tes données SMS sont utilisées uniquement dans le cadre des services offerts par Programme SWITCH par Sébastien Dupuis.</p>
+  </section>
+
+  <!-- 05 -->
+  <section>
+    <div class="eyebrow">05 · Partage de tes données</div>
+    <h2>Liste exhaustive · aucune exception</h2>
+    <p>SWITCH ne vend jamais, ne loue jamais et ne diffuse jamais tes données. Les seuls cas où tes données peuvent être partagées sont strictement les suivants :</p>
+    <ol class="n">
+      <li><b>Prestataires techniques sous contrat.</b> Hébergeurs, outils CRM (Go High Level), services de messagerie courriel et SMS, plateforme de paiement (Stripe). Tous opèrent sous accord de confidentialité.</li>
+      <li><b>Obligation légale.</b> Si une autorité compétente émet une réquisition légale conforme aux lois du Québec ou du Canada, SWITCH se conforme au strict minimum exigé.</li>
+      <li><b>Protection des droits.</b> En cas de tentative de fraude, d'abus ou de manquement contractuel, SWITCH peut partager les données strictement nécessaires avec les autorités compétentes.</li>
+    </ol>
+    <p>Aucun autre cas. Aucune exception.</p>
+  </section>
+
+  <!-- 06 -->
+  <section>
+    <div class="eyebrow">06 · Sécurité des données</div>
+    <h2>Mesures techniques et organisationnelles</h2>
+    <p>SWITCH applique des mesures techniques et organisationnelles raisonnables pour protéger tes données :</p>
+    <ul class="b">
+      <li>Chiffrement TLS/HTTPS sur l'intégralité du site et des formulaires.</li>
+      <li>Hébergement sécurisé conforme aux standards de l'industrie.</li>
+      <li>Accès restreint aux données personnelles · uniquement l'intervenant et les prestataires sous contrat.</li>
+      <li>Conservation des données limitée à la durée nécessaire au service rendu, puis archivage ou suppression.</li>
+      <li>Sauvegardes chiffrées régulières.</li>
+    </ul>
+    <p>Aucune transmission sur Internet n'est 100 % sécurisée par nature. SWITCH met en place les meilleures pratiques disponibles, mais ne peut garantir une sécurité absolue.</p>
+  </section>
+
+  <!-- 07 -->
+  <section>
+    <div class="eyebrow">07 · Tes droits</div>
+    <h2>Loi 25 Québec + LPRPDE Canada</h2>
+    <p>Tu disposes des droits suivants sur tes données, exerçables à tout moment :</p>
+    <ol class="n">
+      <li><b>Droit d'accès.</b> Tu peux demander une copie de toutes les données personnelles que SWITCH détient à ton sujet.</li>
+      <li><b>Droit de rectification.</b> Tu peux demander la correction de toute donnée inexacte ou incomplète.</li>
+      <li><b>Droit à l'effacement.</b> Tu peux demander la suppression de tes données, sous réserve des obligations légales de conservation.</li>
+      <li><b>Droit de retrait du consentement.</b> Tu peux retirer ton consentement à tout moment pour le traitement de tes données ou la réception de communications.</li>
+      <li><b>Droit à la portabilité.</b> Tu peux demander la transmission de tes données dans un format structuré et lisible.</li>
+      <li><b>Droit de plainte.</b> Tu peux déposer plainte auprès de la Commission d'accès à l'information du Québec (<a href="https://www.cai.gouv.qc.ca">cai.gouv.qc.ca</a>) ou du Commissariat à la protection de la vie privée du Canada (<a href="https://www.priv.gc.ca">priv.gc.ca</a>).</li>
+    </ol>
+    <p>Pour exercer un de ces droits, écris à <a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a>. Réponse sous 30 jours ouvrables maximum.</p>
+  </section>
+
+  <!-- 08 -->
+  <section>
+    <div class="eyebrow">08 · Contact</div>
+    <h2>Question, exercice de droit, signalement</h2>
+    <p>Pour toute question relative à cette politique de confidentialité ou pour exercer un de tes droits :</p>
+    <table>
+      <tr><th>Canal</th><th>Coordonnées</th></tr>
+      <tr><td><b>Courriel</b></td><td><a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a></td></tr>
+      <tr><td><b>Téléphone</b></td><td><a href="tel:+15145193459">514-519-3459</a></td></tr>
+      <tr><td><b>Site</b></td><td><a href="https://switchyourmind.ca">switchyourmind.ca</a></td></tr>
+      <tr><td><b>Entité</b></td><td>Programme SWITCH par Sébastien Dupuis · Québec, Canada</td></tr>
+    </table>
+  </section>
+
+  <!-- 09 -->
+  <section>
+    <div class="eyebrow">09 · Évolution de cette politique</div>
+    <h2>Versions, dates, notification</h2>
+    <p>SWITCH peut mettre à jour cette politique à mesure que les services évoluent ou que la réglementation change. Toute modification substantielle est notifiée par courriel aux personnes inscrites au moins 30 jours avant prise d'effet.</p>
+    <p class="grey" style="font-size:15px;">Version actuelle · v1.1 · juin 2026. Prochaine révision programmée · décembre 2026 ou plus tôt si dérive réglementaire identifiée.</p>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fwrap">
+    <div class="fwm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</div>
+    <div class="fline">© 2026 switchyourmind.ca · Protocole d'identité opérationnelle · v1.1</div>
+    <div class="fnav">
+      <a href="https://switchyourmind.ca">Accueil</a>
+      <a href="https://switchyourmind.ca/audit">Audit d'Architecture</a>
+      <a href="https://switchyourmind.ca/confidentialite">Politique de confidentialité</a>
+      <a href="mailto:info@switchyourmind.ca">Contact</a>
+    </div>
+    <p class="legal"><b style="color:#aeb8c4;">Mention légale ·</b> SWITCH est un programme de coaching en performance et reprogrammation identitaire opéré au Québec. SWITCH n'est pas un service de psychothérapie au sens de la Loi 21 du Québec. SWITCH n'est ni un conseil juridique, ni un conseil financier, ni un conseil matrimonial. Le protocole ne pose pas de diagnostic clinique, ne traite pas de troubles mentaux, et ne remplace pas un suivi clinique. L'intervenant respecte ses obligations professionnelles et oriente toute situation de détresse psychologique vers un professionnel qualifié de l'Ordre des psychologues du Québec (<a href="https://www.ordrepsy.qc.ca">ordrepsy.qc.ca</a>). Aucune promesse de résultat financier précis ou temporel n'est offerte.</p>
+    <div class="src">SWITCH · Politique de confidentialité v1.1 · juin 2026 · Document légal traçable Bible v1.1 FINALE · Conforme Loi 25 Québec + LPRPDE Canada + A2P 10DLC</div>
+  </div>
+</footer>
+

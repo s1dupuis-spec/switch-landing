@@ -1,0 +1,344 @@
+<!-- ============================================================
+     SWITCH · Conditions d'utilisation v1.1 — bloc à coller
+     dans un élément "Custom Code / HTML" GHL (page vide, pleine
+     largeur, sans padding).
+     ============================================================ -->
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --blue:#2e9fe0; --blue-soft:#7fc0ec;
+    --white:#f4f7fa; --grey:#6b7787; --txt:#aeb8c4;
+    --line:rgba(255,255,255,0.12); --box:rgba(255,255,255,0.035);
+    --bg:#080b11;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:
+      radial-gradient(120% 40% at 88% 0%, rgba(46,120,180,0.30), rgba(10,14,20,0) 46%),
+      var(--bg);
+    background-attachment:fixed;
+    color:var(--white);
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--blue); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  .mono{ font-family:"Menlo","SF Mono",ui-monospace,monospace; }
+  .blue{ color:var(--blue); }
+  .grey{ color:var(--grey); }
+
+  /* ---- NAV ---- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 7vw; border-bottom:1px solid var(--line);
+    background:rgba(8,11,17,0.82); backdrop-filter:blur(12px);
+  }
+  .wm{ color:var(--blue); font-weight:800; font-size:19px; letter-spacing:3px; }
+  .nav .ver{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; color:var(--grey); letter-spacing:2px; }
+
+  /* ---- LAYOUT ---- */
+  .wrap{ max-width:880px; margin:0 auto; padding:0 7vw; }
+
+  /* ---- HERO ---- */
+  .hero{ padding:90px 0 64px; border-bottom:1px solid var(--line); }
+  .doctag{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:4px; color:var(--blue); text-transform:uppercase; }
+  .hero h1{ font-weight:800; font-size:clamp(48px,8vw,86px); line-height:0.98; letter-spacing:-2px; margin-top:26px; }
+  .hero h1 .pt{ color:var(--blue); }
+  .hero .sub{ font-size:clamp(19px,2.4vw,24px); line-height:1.5; color:var(--txt); margin-top:30px; max-width:640px; }
+  .hero .sub b{ color:var(--white); font-weight:600; }
+  .hero .stamp{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; color:var(--grey); letter-spacing:2px; margin-top:34px; }
+
+  /* ---- SECTIONS ---- */
+  section{ padding:58px 0; border-bottom:1px solid var(--line); }
+  .eyebrow{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:3px; color:var(--blue); text-transform:uppercase; }
+  section h2{ font-weight:800; font-size:clamp(28px,4vw,42px); line-height:1.05; letter-spacing:-1px; margin:18px 0 6px; }
+  .kick{ font-size:16px; color:var(--grey); letter-spacing:0.5px; margin-bottom:26px; }
+  section h3{ font-weight:700; font-size:22px; color:var(--blue); margin:34px 0 14px; }
+  p{ font-size:18px; line-height:1.62; color:var(--txt); margin-top:18px; }
+  p b, li b{ color:var(--white); font-weight:600; }
+  p:first-of-type{ margin-top:0; }
+
+  /* numbered + bullet lists */
+  ul.b, ol.n{ list-style:none; margin-top:20px; }
+  ul.b li{ position:relative; padding-left:30px; font-size:18px; line-height:1.55; color:var(--txt); margin-bottom:14px; }
+  ul.b li::before{ content:""; position:absolute; left:6px; top:11px; width:7px; height:7px; background:var(--blue); border-radius:50%; }
+  ol.n{ counter-reset:i; }
+  ol.n li{ counter-increment:i; position:relative; padding-left:54px; font-size:18px; line-height:1.55; color:var(--txt); margin-bottom:18px; }
+  ol.n li::before{ content:counter(i,decimal-leading-zero); position:absolute; left:0; top:1px; font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:15px; color:var(--blue); letter-spacing:1px; }
+
+  /* callout */
+  .callout{ background:var(--box); border-left:4px solid var(--blue); padding:24px 28px; margin-top:26px; border-radius:5px; }
+  .callout .clabel{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:14px; }
+  .callout p{ color:var(--white); margin-top:14px; }
+  .callout p:first-of-type{ margin-top:0; }
+  .callout.warn{ border-left-color:#e0a52e; background:rgba(224,165,46,0.05); }
+  .callout.warn .clabel{ color:#e8bb5e; }
+
+  /* price highlight */
+  .price{ display:flex; flex-wrap:wrap; align-items:baseline; gap:14px; margin-top:24px; padding:24px 28px; background:rgba(46,159,224,0.08); border-top:3px solid var(--blue); border-radius:5px; }
+  .price .amt{ font-weight:800; font-size:40px; letter-spacing:-1px; color:#fff; }
+  .price .lab{ font-size:17px; color:var(--txt); }
+
+  /* tables */
+  table{ width:100%; border-collapse:collapse; margin-top:24px; font-size:17px; }
+  th,td{ text-align:left; padding:16px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:12px; letter-spacing:2px; color:var(--grey); text-transform:uppercase; font-weight:400; }
+  td{ color:var(--txt); }
+  td b{ color:#fff; font-weight:600; }
+
+  /* concepts grid */
+  .concepts{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; margin-top:24px; }
+  .concepts span{ font-size:15px; color:#cdd5df; padding:12px 14px; background:var(--box); border-radius:4px; border-left:2px solid var(--blue); }
+
+  /* ---- FOOTER ---- */
+  footer{ padding:64px 7vw 80px; }
+  footer .fwrap{ max-width:880px; margin:0 auto; }
+  footer .fwm{ color:var(--blue); font-weight:800; font-size:18px; letter-spacing:3px; }
+  footer .fline{ font-size:14px; color:var(--grey); margin-top:10px; }
+  .fnav{ display:flex; flex-wrap:wrap; gap:10px 26px; margin-top:30px; font-size:15px; }
+  .legal{ font-size:13px; line-height:1.7; color:var(--grey); margin-top:36px; padding-top:30px; border-top:1px solid var(--line); }
+  .src{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:11px; color:rgba(107,119,135,0.7); letter-spacing:1px; margin-top:24px; }
+
+  /* ---- PRINT / PDF ---- */
+  @media print{
+    .nav{ position:static; backdrop-filter:none; }
+    .hero{ padding-top:40px; }
+    section{ padding:40px 0; }
+    .callout, .price, table, .concepts{ break-inside:avoid; page-break-inside:avoid; }
+    section h2, section h3{ break-after:avoid; page-break-after:avoid; }
+    ul.b li, ol.n li{ break-inside:avoid; page-break-inside:avoid; }
+    a{ color:var(--blue-soft); }
+  }
+</style>
+
+<nav class="nav">
+  <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
+  <span class="ver">CONDITIONS · v1.1 · JUIN 2026</span>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="doctag">Document légal · cadre contractuel</div>
+    <h1>Conditions<br>d'utilisation<span class="pt">.</span></h1>
+    <p class="sub">Le cadre d'usage du site SWITCH, du protocole et de tous les services associés. <b>Sans détour. Sans clause cachée. Tu lis, tu sais.</b></p>
+    <div class="stamp">Mise à jour · juin 2026 · v1.1</div>
+  </header>
+
+  <!-- 01 -->
+  <section>
+    <div class="eyebrow">01 · Acceptation des conditions</div>
+    <h2>Cadre contractuel</h2>
+    <p>SWITCH (« <b>SWITCH</b> », « <b>nous</b> », « <b>notre</b> ») est le nom commercial du protocole opéré au Québec sous l'entité <b>Programme SWITCH par Sébastien Dupuis</b>.</p>
+    <p>En utilisant le site <a href="https://switchyourmind.ca">switchyourmind.ca</a>, en remplissant un formulaire d'opt-in, en participant à un Audit d'Architecture, en réservant le protocole 90 jours ou en consommant un contenu SWITCH (Livret, audit, communication SMS), tu acceptes les présentes Conditions d'utilisation dans leur intégralité.</p>
+    <p>Si tu n'es pas d'accord avec ces conditions, n'utilise pas nos services.</p>
+  </section>
+
+  <!-- 02 -->
+  <section>
+    <div class="eyebrow">02 · Services SWITCH</div>
+    <h2>Ce qu'est SWITCH · ce que SWITCH n'est pas</h2>
+
+    <h3>Ce que SWITCH offre</h3>
+    <ul class="b">
+      <li><b>Audit d'Architecture · pré-programme.</b> Appel de qualification commerciale de 60 minutes, 1:1, gratuit, sans engagement.</li>
+      <li><b>Protocole SWITCH 90 jours.</b> Programme structuré incluant 5 audits 1:1 datés (J3, J21, J45, J70, J90), 12 livrets hebdomadaires, 1 manuel opérationnel, 1 journal 12 semaines, 1 plan de maintenance 12 mois post-programme.</li>
+      <li><b>Communications opérationnelles.</b> Courriels, SMS, rappels et notifications directement liés à ton parcours.</li>
+      <li><b>Contenu éditorial public.</b> Posts, vidéos, articles, livrets publics. Accessibles sans inscription.</li>
+    </ul>
+
+    <h3>Ce que SWITCH n'est pas</h3>
+    <div class="callout warn">
+      <div class="clabel">⚠ Mention obligatoire · Loi 21 du Québec</div>
+      <p>SWITCH est un programme de coaching en performance et reprogrammation identitaire. <b>Pas un service de psychothérapie</b> au sens de la Loi 21. Le protocole ne pose pas de diagnostic clinique, ne traite pas de troubles mentaux, et ne remplace pas un suivi clinique.</p>
+      <p>SWITCH n'est <b>ni un conseil juridique, ni un conseil financier, ni un conseil matrimonial</b>. Les décisions structurelles dans ces domaines relèvent des professionnels compétents.</p>
+      <p>Aucune promesse de résultat financier précis ou temporel n'est offerte par SWITCH.</p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section>
+    <div class="eyebrow">03 · Éligibilité au protocole</div>
+    <h2>Calibration · 18 ans et plus · qualification préalable</h2>
+    <p>L'accès au protocole SWITCH 90 jours et à tous les services associés est conditionné par 3 critères :</p>
+    <ol class="n">
+      <li><b>Âge minimum · 18 ans.</b> Le protocole est destiné aux personnes majeures.</li>
+      <li><b>Qualification préalable.</b> Tout candidat passe le formulaire de qualification approfondie et l'Audit d'Architecture. L'intervenant détermine seul si le profil correspond au protocole.</li>
+      <li><b>Capacité opérationnelle et financière.</b> Disponibilité de 5 à 7 heures hebdomadaires et capacité d'investissement déclarées lors de la qualification.</li>
+    </ol>
+    <p>SWITCH se réserve le droit de refuser un candidat dont le profil ne correspond pas au protocole, et d'orienter ce candidat vers la ressource appropriée (mentor, formation tactique, professionnel qualifié de l'OPQ selon le contexte).</p>
+  </section>
+
+  <!-- 04 -->
+  <section>
+    <div class="eyebrow">04 · Tarifs et modalités de paiement</div>
+    <h2>CAD · échelonnement · conditions de réservation</h2>
+    <p><b>Audit d'Architecture · gratuit.</b> Aucun paiement requis pour l'appel de qualification de 60 minutes.</p>
+    <div class="price">
+      <span class="amt">7 500 $ CAD</span>
+      <span class="lab">Protocole SWITCH 90 jours · tarif unique, sans réduction, sans option d'extension.</span>
+    </div>
+    <div class="callout">
+      <div class="clabel">Modalités de paiement échelonné · 3 versements</div>
+      <ul class="b">
+        <li>3 750 $ CAD à la réservation (avant J1)</li>
+        <li>1 875 $ CAD à J21 (post-Audit 02)</li>
+        <li>1 875 $ CAD à J45 (post-Audit 03)</li>
+      </ul>
+      <p class="grey" style="font-size:15px;">Paiements traités par Stripe (PCI-DSS niveau 1). Aucune information de carte bancaire stockée par SWITCH.</p>
+    </div>
+
+    <h3>Conditions d'annulation</h3>
+    <ul class="b">
+      <li>Annulation avant J1 (avant démarrage du programme) · remboursement intégral sous 14 jours ouvrables.</li>
+      <li>Annulation entre J1 et J21 (Phase 1) · remboursement partiel à hauteur de 50 % du montant déjà versé.</li>
+      <li>Annulation au-delà de J21 · aucun remboursement. Les livrables sont engagés et la fenêtre de neuroplasticité 90 jours est en cours.</li>
+    </ul>
+    <p>Toute demande d'annulation s'effectue par courriel à <a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a>.</p>
+  </section>
+
+  <!-- 05 -->
+  <section>
+    <div class="eyebrow">05 · Utilisation autorisée</div>
+    <h2>Cadre d'usage des services et contenus</h2>
+    <p>En utilisant les services SWITCH, tu t'engages à :</p>
+    <ol class="n">
+      <li>Fournir des informations exactes et honnêtes lors de la qualification et tout au long du parcours.</li>
+      <li>Ne pas utiliser nos services à des fins illégales, abusives, frauduleuses ou contraires à l'éthique professionnelle.</li>
+      <li>Ne pas reproduire, copier, distribuer, revendre ou utiliser à des fins commerciales les contenus, méthodes, livrets, manuels, audits ou tout autre matériel propriétaire SWITCH sans autorisation écrite préalable.</li>
+      <li>Ne pas tenter d'accéder sans autorisation aux systèmes, comptes, données ou infrastructures SWITCH.</li>
+      <li>Respecter la confidentialité des échanges en audit et des informations cliniques que l'intervenant peut t'amener à partager.</li>
+    </ol>
+    <p>Toute violation de ces engagements peut entraîner la suspension immédiate des services, sans remboursement, et engager ta responsabilité civile et pénale.</p>
+  </section>
+
+  <!-- 06 -->
+  <section>
+    <div class="eyebrow">06 · Consentement SMS · A2P 10DLC</div>
+    <h2>Conformité réglementaire nord-américaine</h2>
+    <p>En fournissant ton numéro de téléphone via un formulaire SWITCH ou en cochant la case de consentement SMS, tu acceptes de recevoir des messages SMS de la part de <b>Programme SWITCH par Sébastien Dupuis</b>.</p>
+
+    <h3>Types de messages envoyés</h3>
+    <ul class="b">
+      <li>Confirmations de réservation (Audit d'Architecture, audits 1:1 du programme).</li>
+      <li>Rappels de rendez-vous à 24 h et 1 h avant l'appel.</li>
+      <li>Notifications opérationnelles liées au programme (jalons J3, J21, J45, J70, J90).</li>
+      <li>Communications occasionnelles concernant l'évolution du protocole ou nouvelles cohortes (fréquence maximale · 1 par mois).</li>
+    </ul>
+
+    <div class="callout">
+      <div class="clabel">Tes contrôles · A2P 10DLC</div>
+      <p><b>STOP</b> · réponds STOP à n'importe quel SMS pour te désabonner immédiatement et de façon permanente.</p>
+      <p><b>HELP</b> · réponds HELP pour obtenir de l'aide ou contacte <a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a>.</p>
+      <p class="grey" style="font-size:15px;">La fréquence des messages varie selon ton parcours. Des frais standards de messagerie et de données peuvent s'appliquer selon ton fournisseur mobile.</p>
+    </div>
+
+    <h3>Limitations à connaître</h3>
+    <ul class="b">
+      <li>Les opérateurs de téléphonie ne sont pas responsables des messages retardés ou non livrés.</li>
+      <li>Ce service SMS est destiné aux personnes âgées de 18 ans et plus.</li>
+      <li>SWITCH ne vend pas, ne loue pas et ne partage pas ton numéro avec des tiers à des fins marketing.</li>
+    </ul>
+    <p>Pour la gestion complète de tes données personnelles, consulte la <a href="https://switchyourmind.ca/confidentialite">Politique de confidentialité</a>.</p>
+  </section>
+
+  <!-- 07 -->
+  <section>
+    <div class="eyebrow">07 · Propriété intellectuelle</div>
+    <h2>Droits d'auteur · marque · contenus</h2>
+    <p>L'ensemble du contenu SWITCH (concepts, méthodes, vocabulaire propriétaire, livrets, manuel opérationnel, audits, journal, schémas, illustrations, textes éditoriaux, photos) est protégé par les lois canadiennes et internationales sur la propriété intellectuelle.</p>
+
+    <h3>Concepts propriétaires SWITCH</h3>
+    <p>Incluent sans s'y limiter :</p>
+    <div class="concepts">
+      <span>Identity Thermostat</span><span>Setpoint</span><span>Daily Code</span>
+      <span>Protocole C.O.R.E.</span><span>Bug dominant</span><span>Code Racine</span>
+      <span>Cartographie V/N/F</span><span>Recalibrage Relationnel</span><span>Directive Exécutive</span>
+      <span>Acte de Preuve</span><span>Acte de Palier</span><span>Recovery Time</span>
+      <span>Densité Position</span><span>Rebound</span><span>Transfert Inter-Contextuel</span>
+    </div>
+    <p>Ces concepts sont la propriété exclusive de Programme SWITCH par Sébastien Dupuis. Toute reproduction, adaptation, traduction, ou utilisation commerciale sans autorisation écrite est interdite.</p>
+
+    <h3>Tes droits comme participant</h3>
+    <p>En t'inscrivant au protocole, tu reçois un droit d'usage personnel et non transférable des livrets, manuels et journaux remis. Ces documents sont pour ton usage personnel exclusif et ne peuvent être partagés, copiés ou redistribués.</p>
+  </section>
+
+  <!-- 08 -->
+  <section>
+    <div class="eyebrow">08 · Limitation de responsabilité</div>
+    <h2>Cadre des responsabilités SWITCH</h2>
+    <p>SWITCH s'engage à fournir ses services avec sérieux, rigueur et conformité au protocole décrit dans ses documents officiels.</p>
+
+    <h3>SWITCH ne garantit pas</h3>
+    <ul class="b">
+      <li>Un résultat financier précis (CA, revenu, marge).</li>
+      <li>Un résultat temporel garanti (« dans 90 jours tu seras X »).</li>
+      <li>Une bascule comportementale spécifique mesurée par des tiers.</li>
+      <li>La compatibilité du protocole avec tout profil indépendamment de sa qualification.</li>
+    </ul>
+    <p>L'efficacité du protocole dépend d'une variable critique · ton assiduité et ton exécution. L'Audit d'Architecture sert précisément à évaluer cette calibration en amont.</p>
+
+    <h3>SWITCH n'est pas responsable</h3>
+    <ul class="b">
+      <li>Des décisions structurelles que tu prends pendant ou après le programme (contrats, finances, relations, structure d'entreprise).</li>
+      <li>Des conséquences indirectes, incidentes, spéciales ou consécutives liées à l'utilisation de nos services.</li>
+      <li>Des interruptions techniques temporaires du site, du CRM ou des outils de communication.</li>
+      <li>Des contenus ou services de tiers liés à SWITCH (Stripe, Go High Level, opérateurs SMS, hébergeurs).</li>
+    </ul>
+    <p>La responsabilité totale de SWITCH, quelle que soit la cause, est limitée au montant que tu as versé pour le service concerné dans les 12 mois précédant le différend.</p>
+  </section>
+
+  <!-- 09 -->
+  <section>
+    <div class="eyebrow">09 · Droit applicable et juridiction</div>
+    <h2>Lois du Québec · tribunaux compétents</h2>
+    <p>Les présentes Conditions d'utilisation sont régies par les lois en vigueur dans la province de Québec et les lois fédérales du Canada applicables, notamment la <b>Loi sur la protection des renseignements personnels dans le secteur privé du Québec (Loi 25)</b> et la <b>Loi sur la protection des renseignements personnels et les documents électroniques du Canada (LPRPDE)</b>.</p>
+    <p>En cas de différend, les parties s'engagent à privilégier la résolution amiable. À défaut, tout litige relèvera exclusivement des tribunaux compétents du district judiciaire de Montréal, Québec.</p>
+  </section>
+
+  <!-- 10 -->
+  <section>
+    <div class="eyebrow">10 · Modifications des conditions</div>
+    <h2>Versions · notification</h2>
+    <p>SWITCH peut mettre à jour ces Conditions d'utilisation à mesure que les services évoluent ou que la réglementation change.</p>
+    <p>Toute modification substantielle est notifiée par courriel aux personnes inscrites au moins 30 jours avant prise d'effet. Les modifications mineures (corrections typographiques, clarifications de formulation) prennent effet à la publication.</p>
+    <p>La version la plus récente est toujours disponible sur <a href="https://switchyourmind.ca/conditions">switchyourmind.ca/conditions</a>.</p>
+    <p class="grey" style="font-size:15px;">Version actuelle · v1.1 · juin 2026. Prochaine révision programmée · décembre 2026 ou plus tôt si dérive réglementaire identifiée.</p>
+  </section>
+
+  <!-- 11 -->
+  <section>
+    <div class="eyebrow">11 · Contact</div>
+    <h2>Question · litige · signalement</h2>
+    <p>Pour toute question relative à ces Conditions d'utilisation, à un service SWITCH ou à un différend :</p>
+    <table>
+      <tr><th>Canal</th><th>Coordonnées</th></tr>
+      <tr><td><b>Courriel</b></td><td><a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a></td></tr>
+      <tr><td><b>Téléphone</b></td><td><a href="tel:+15145193459">514-519-3459</a></td></tr>
+      <tr><td><b>Site</b></td><td><a href="https://switchyourmind.ca">switchyourmind.ca</a></td></tr>
+      <tr><td><b>Entité</b></td><td>Programme SWITCH par Sébastien Dupuis · Québec, Canada</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fwrap">
+    <div class="fwm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</div>
+    <div class="fline">© 2026 switchyourmind.ca · Protocole d'identité opérationnelle · v1.1</div>
+    <div class="fnav">
+      <a href="https://switchyourmind.ca">Accueil</a>
+      <a href="https://switchyourmind.ca/audit">Audit d'Architecture</a>
+      <a href="https://switchyourmind.ca/conditions">Conditions d'utilisation</a>
+      <a href="https://switchyourmind.ca/confidentialite">Politique de confidentialité</a>
+      <a href="mailto:info@switchyourmind.ca">Contact</a>
+    </div>
+    <p class="legal">SWITCH est un programme de coaching en performance et reprogrammation identitaire opéré au Québec. SWITCH n'est pas un service de psychothérapie au sens de la Loi 21 du Québec. SWITCH n'est ni un conseil juridique, ni un conseil financier, ni un conseil matrimonial. Le protocole ne pose pas de diagnostic clinique, ne traite pas de troubles mentaux, et ne remplace pas un suivi clinique. L'intervenant respecte ses obligations professionnelles et oriente toute situation de détresse psychologique vers un professionnel qualifié de l'Ordre des psychologues du Québec (<a href="https://www.ordrepsy.qc.ca">ordrepsy.qc.ca</a>). Aucune promesse de résultat financier précis ou temporel n'est offerte.</p>
+    <div class="src">SWITCH · Conditions d'utilisation v1.1 · juin 2026 · Document légal traçable Bible v1.1 FINALE · Conforme Loi 25 Québec + LPRPDE Canada + A2P 10DLC</div>
+  </div>
+</footer>
+
