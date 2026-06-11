@@ -93,5 +93,26 @@
 function _swH(){parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*");}
 window.addEventListener("load",_swH);window.addEventListener("resize",_swH);setInterval(_swH,800);
 </script>
+<!-- Redirection après réservation -->
+<script>
+(function(){
+  var MERCI_URL = "https://switchyourmind.ca/merci-123";
+  var redirected = false;
+  function goMerci(){
+    if (redirected) return; redirected = true;
+    try { if (window.top && window.top !== window.self){ window.top.location.href = MERCI_URL; return; } } catch(e){}
+    window.location.href = MERCI_URL;
+  }
+  window.addEventListener("message", function(e){
+    var d = e.data; if (d == null) return;
+    var s; try { s = (typeof d === "string") ? d : JSON.stringify(d); } catch(err){ return; }
+    // Diagnostic : à retirer une fois la redirection validée.
+    if (/appoint|book|calendar|slot/i.test(s)) { try{ console.log("[SWITCH] msg booking:", s); }catch(_){} }
+    var isBooking = /appointment|booking|booked|slotconfirm|bookingconfirmed/i.test(s);
+    var isSuccess = /booked|success|confirm|complete|created/i.test(s);
+    if (isBooking && isSuccess) goMerci();
+  }, false);
+})();
+</script>
 </body>
 </html>
