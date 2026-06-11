@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWITCH · Qualification approfondie · Étape 2</title>
+<meta name="description" content="Qualification approfondie SWITCH. Étape 2 sur 2. 4 minutes. On regarde si ton profil est calibré pour le protocole.">
+<meta name="robots" content="noindex">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --blue:#2e9fe0; --blue-soft:#7fc0ec;
+    --white:#f4f7fa; --grey:#6b7787; --txt:#aeb8c4;
+    --line:rgba(255,255,255,0.12); --box:rgba(255,255,255,0.04);
+    --bg:#080b11;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(110% 50% at 50% 0%, rgba(46,120,180,0.28), rgba(10,14,20,0) 50%),
+      var(--bg);
+    color:var(--white);
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
+  }
+  a{ color:var(--blue); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  .mono{ font-family:"Menlo","SF Mono",ui-monospace,monospace; }
+
+  .nav{ display:flex; justify-content:space-between; align-items:center;
+    padding:20px 7vw; border-bottom:1px solid var(--line); }
+  .wm{ color:var(--blue); font-weight:800; font-size:19px; letter-spacing:3px; }
+  .nav .ver{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; color:var(--grey); letter-spacing:2px; }
+
+  main{ flex:1; padding:54px 7vw 72px; }
+  .wrap{ max-width:680px; margin:0 auto; }
+
+  .eyebrow{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:4px; color:var(--blue); text-transform:uppercase; }
+  h1{ font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.05; letter-spacing:-1.5px; margin-top:14px; }
+  .intro{ font-size:17px; line-height:1.6; color:var(--txt); margin-top:20px; }
+  .intro b{ color:var(--white); font-weight:600; }
+  .hello{ color:var(--blue-soft); margin-top:10px; font-size:16px; }
+
+  .sec{ margin-top:46px; border-top:1px solid var(--line); padding-top:30px; }
+  .sec h2{ font-size:13px; letter-spacing:3px; text-transform:uppercase; color:var(--blue); font-family:"Menlo","SF Mono",ui-monospace,monospace; }
+  .sec .stime{ font-size:12px; color:var(--grey); margin-top:4px; }
+
+  .field{ margin-top:26px; }
+  .field > label.q{ display:block; font-size:17px; font-weight:600; color:var(--white); line-height:1.45; }
+  .field .req{ color:var(--blue); }
+  .field .hint{ display:block; font-size:13px; color:var(--grey); margin-top:6px; line-height:1.5; }
+
+  input[type=text], select, textarea{
+    width:100%; margin-top:12px; background:var(--box); color:var(--white);
+    border:1px solid var(--line); border-radius:9px; padding:14px 15px; font-size:16px;
+    font-family:inherit; -webkit-appearance:none; appearance:none;
+  }
+  textarea{ min-height:120px; resize:vertical; line-height:1.5; }
+  input::placeholder, textarea::placeholder{ color:#5d6775; }
+  input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(46,159,224,0.15); }
+  select{ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237fc0ec' stroke-width='3'><path d='M6 9l6 6 6-6'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; }
+
+  .opts{ margin-top:12px; display:flex; flex-direction:column; gap:10px; }
+  .opt{ display:flex; gap:12px; align-items:flex-start; background:var(--box); border:1px solid var(--line);
+    border-radius:9px; padding:13px 15px; cursor:pointer; transition:border-color .15s, background .15s; }
+  .opt:hover{ border-color:rgba(127,192,236,0.5); }
+  .opt input{ margin-top:3px; accent-color:var(--blue); width:17px; height:17px; flex:none; }
+  .opt span{ font-size:15.5px; color:var(--txt); line-height:1.45; }
+  .opt input:checked + span{ color:var(--white); }
+
+  .submit{ margin-top:40px; }
+  .btn{ display:inline-block; font-weight:800; font-size:17px; padding:17px 30px; border-radius:10px;
+    border:none; cursor:pointer; font-family:inherit; }
+  .btn.primary{ background:var(--blue); color:#04121d; }
+  .btn.primary:hover{ background:var(--blue-soft); text-decoration:none; }
+  .btn.primary:disabled{ opacity:.5; cursor:default; }
+  .consent{ font-size:13px; color:var(--grey); margin-top:16px; line-height:1.5; }
+  .err{ display:none; color:#ff8d7a; font-size:14px; margin-top:14px; }
+
+  /* SUCCESS */
+  .success{ display:none; max-width:620px; margin:0 auto; text-align:left; }
+  .success .check{ width:84px; height:84px; border-radius:50%; border:2px solid var(--blue);
+    display:flex; align-items:center; justify-content:center; margin-bottom:34px;
+    box-shadow:0 0 50px rgba(46,159,224,0.25); }
+  .success .check svg{ width:40px; height:40px; stroke:var(--blue); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .success h2{ font-weight:800; font-size:clamp(30px,5vw,46px); line-height:1.05; letter-spacing:-1px; }
+  .success p{ font-size:18px; line-height:1.6; color:var(--txt); margin-top:20px; }
+  .success .actions{ margin-top:34px; }
+
+  footer{ padding:36px 7vw 56px; border-top:1px solid var(--line); }
+  .fwm{ color:var(--blue); font-weight:800; font-size:16px; letter-spacing:3px; }
+  .fline{ font-size:13px; color:var(--grey); margin-top:8px; }
+  .legal{ font-size:12px; line-height:1.7; color:var(--grey); margin-top:20px; max-width:880px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
+  <span class="ver">QUALIFICATION · 2/2</span>
+</nav>
+
+<main>
+  <!-- ============ FORMULAIRE ============ -->
+  <div class="wrap" id="formView">
+    <div class="eyebrow">Étape 2 sur 2 · Qualification approfondie</div>
+    <h1>Maintenant on regarde si ton profil est calibré.</h1>
+    <p class="hello" id="hello">Tu as fait l'étape 1. On continue.</p>
+    <p class="intro">Ce qui suit prend <b>4 minutes</b>. 5 sections. Réponds avec précision, l'intervenant lit chaque ligne. Si ton profil correspond au protocole SWITCH, tu reçois un lien de réservation sous 24 h ouvrables. Sinon, tu reçois une orientation honnête vers la ressource appropriée.</p>
+
+    <form id="qualForm" novalidate>
+      <!-- hidden (URL params GHL) -->
+      <input type="hidden" name="contact_id" id="h_contact_id">
+      <input type="hidden" name="prenom" id="h_prenom">
+      <input type="hidden" name="nom" id="h_nom">
+      <input type="hidden" name="email" id="h_email">
+      <input type="hidden" name="telephone" id="h_telephone">
+      <input type="hidden" name="ville" id="h_ville">
+
+      <!-- SECTION 02 -->
+      <div class="sec">
+        <h2>02 · Profil professionnel</h2>
+        <div class="stime">1 minute</div>
+
+        <div class="field">
+          <label class="q">Ce que tu fais <span class="req">*</span></label>
+          <input type="text" name="profession" placeholder="Ex : Dirigeant agence · Avocat associé · Consultant indépendant" required>
+        </div>
+
+        <div class="field">
+          <label class="q">Années d'activité <span class="req">*</span></label>
+          <select name="annees" required>
+            <option value="" disabled selected>Choisis...</option>
+            <option>Moins de 3 ans</option>
+            <option>3 à 5 ans</option>
+            <option>6 à 10 ans</option>
+            <option>11 à 20 ans</option>
+            <option>Plus de 20 ans</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="q">CA annuel (CAD) <span class="req">*</span></label>
+          <select name="ca" required>
+            <option value="" disabled selected>Choisis...</option>
+            <option>Moins de 150 000 $</option>
+            <option>150 000 à 300 000 $</option>
+            <option>300 000 à 600 000 $</option>
+            <option>600 000 $ à 1 M$</option>
+            <option>1 à 3 M$</option>
+            <option>Plus de 3 M$</option>
+            <option>Je préfère pas répondre</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SECTION 03 -->
+      <div class="sec">
+        <h2>03 · Ton plafond</h2>
+        <div class="stime">1 minute</div>
+
+        <div class="field">
+          <label class="q">Depuis combien de temps tu sens que tu plafonnes ? <span class="req">*</span></label>
+          <span class="hint">SWITCH est calibré pour les plafonds installés depuis 12 mois ou plus.</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="duree" value="Moins de 6 mois" required><span>Moins de 6 mois</span></label>
+            <label class="opt"><input type="radio" name="duree" value="6 à 12 mois"><span>6 à 12 mois</span></label>
+            <label class="opt"><input type="radio" name="duree" value="12 à 24 mois"><span>12 à 24 mois</span></label>
+            <label class="opt"><input type="radio" name="duree" value="Plus de 24 mois"><span>Plus de 24 mois</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">Décris en 2-3 phrases un moment précis et récent où tu as opéré sous ta capacité réelle <span class="req">*</span></label>
+          <span class="hint">Pas une journée. Un moment. Avec qui. Quel jour. Ce qui s'est dit. La scène brute donne plus d'information que la meilleure analyse.</span>
+          <textarea name="moment" required placeholder="Sois précis."></textarea>
+        </div>
+
+        <div class="field">
+          <label class="q">Estimation de ce que ton plafond te coûte par an</label>
+          <span class="hint">Optionnel. Ex : 80K$ en prix coupés · 4 mois de recrutement repoussé.</span>
+          <input type="text" name="cout" placeholder="Optionnel">
+        </div>
+      </div>
+
+      <!-- SECTION 04 -->
+      <div class="sec">
+        <h2>04 · Capacité opérationnelle</h2>
+        <div class="stime">1 min 30</div>
+
+        <div class="field">
+          <label class="q">As-tu déjà tenu un engagement long de 60-90 jours ? <span class="req">*</span></label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="antecedent" value="Oui, plusieurs fois" required><span>Oui, plusieurs fois</span></label>
+            <label class="opt"><input type="radio" name="antecedent" value="Oui, une fois"><span>Oui, une fois</span></label>
+            <label class="opt"><input type="radio" name="antecedent" value="Entamé, pas terminé"><span>J'ai entamé, pas terminé</span></label>
+            <label class="opt"><input type="radio" name="antecedent" value="Non, jamais"><span>Non, jamais</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">Combien d'heures par semaine, vraiment disponibles ? <span class="req">*</span></label>
+          <span class="hint">Le protocole demande 5 à 7 heures hebdomadaires.</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="bandwidth" value="7 heures et plus" required><span>7 heures et plus</span></label>
+            <label class="opt"><input type="radio" name="bandwidth" value="5 à 7 heures"><span>5 à 7 heures</span></label>
+            <label class="opt"><input type="radio" name="bandwidth" value="3 à 5 heures"><span>3 à 5 heures</span></label>
+            <label class="opt"><input type="radio" name="bandwidth" value="Moins de 3 heures"><span>Moins de 3 heures</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">Tu opères mieux en cadre rigide ou en flexibilité ? <span class="req">*</span></label>
+          <span class="hint">SWITCH est rigide. 5 audits datés. Daily Code 12 min par jour sans exception.</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="cadre" value="Cadre rigide" required><span>Cadre rigide, ça me structure</span></label>
+            <label class="opt"><input type="radio" name="cadre" value="Mixte"><span>Mixte, ça dépend du contexte</span></label>
+            <label class="opt"><input type="radio" name="cadre" value="Flexibilité"><span>Flexibilité, le rigide me bloque</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">Si je te donnais demain une méthode parfaite, l'exécuterais-tu ? <span class="req">*</span></label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="methode" value="Oui, immédiatement" required><span>Oui, immédiatement. C'est ce qui me manque.</span></label>
+            <label class="opt"><input type="radio" name="methode" value="Oui mais objections"><span>Je dirais oui, mais je vois déjà des objections monter.</span></label>
+            <label class="opt"><input type="radio" name="methode" value="Plus profond"><span>Une méthode ne suffirait pas. C'est plus profond.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 05 -->
+      <div class="sec">
+        <h2>05 · Capacité financière</h2>
+        <div class="stime">30 secondes</div>
+
+        <div class="field">
+          <label class="q">Tarif du protocole · 7 500 $ CAD · paiement en 3 versements <span class="req">*</span></label>
+          <span class="hint">3 750 $ à la réservation · 1 875 $ à J21 · 1 875 $ à J45. Pas de tarif réduit.</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="capacite" value="Capacité confirmée" required><span>Capacité confirmée. J'ai les fonds pour investir 7 500 $ dans les 90 jours.</span></label>
+            <label class="opt"><input type="radio" name="capacite" value="À confirmer ≤30j"><span>À confirmer (≤ 30 jours). Fonds disponibles sous condition de cycle de trésorerie.</span></label>
+            <label class="opt"><input type="radio" name="capacite" value="Pas dans 30 jours"><span>Pas dans les 30 prochains jours.</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 06 -->
+      <div class="sec">
+        <h2>06 · Disponibilité d'appel</h2>
+        <div class="stime">20 secondes</div>
+
+        <div class="field">
+          <label class="q">Quand serais-tu disponible pour un appel de 60 minutes ? <span class="req">*</span></label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="dispo" value="Cette semaine" required><span>Cette semaine</span></label>
+            <label class="opt"><input type="radio" name="dispo" value="Semaine prochaine"><span>Semaine prochaine</span></label>
+            <label class="opt"><input type="radio" name="dispo" value="2 prochaines semaines"><span>Dans les 2 prochaines semaines</span></label>
+            <label class="opt"><input type="radio" name="dispo" value="Dans le mois"><span>Dans le mois</span></label>
+            <label class="opt"><input type="radio" name="dispo" value="Plus tard"><span>Plus tard, je préciserai par courriel</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="q">Créneaux préférés</label>
+          <span class="hint">Optionnel. Ex : matin avant 10h · mardi et jeudi en après-midi.</span>
+          <input type="text" name="creneaux" placeholder="Optionnel">
+        </div>
+
+        <div class="field">
+          <label class="q">Comment as-tu entendu parler de SWITCH ?</label>
+          <span class="hint">Optionnel. Ex : LinkedIn · référence d'un proche · article.</span>
+          <input type="text" name="comment-trouve" placeholder="Optionnel">
+        </div>
+      </div>
+
+      <div class="submit">
+        <button type="submit" class="btn primary" id="submitBtn">Envoyer ma qualification →</button>
+        <p class="consent">En envoyant, tu confirmes que tes réponses reflètent honnêtement ta situation actuelle.</p>
+        <p class="err" id="errMsg">Il manque une réponse obligatoire. Vérifie les champs marqués d'une étoile.</p>
+      </div>
+    </form>
+  </div>
+
+  <!-- ============ ÉCRAN DE SUCCÈS ============ -->
+  <div class="success" id="successView">
+    <div class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h2>Reçu. L'intervenant analyse ton profil.</h2>
+    <p>Ta qualification a été transmise. Tu reçois une réponse sous 24 h ouvrables. Si ton profil est calibré, tu repars avec un lien de réservation pour ton Audit d'Architecture (60 minutes, 1:1, gratuit). Sinon, une orientation honnête vers la ressource appropriée.</p>
+    <p>Tu peux déjà réserver ton créneau ci-dessous.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://switchyourmind.ca/booking">Réserve mon Audit d'Architecture →</a>
+    </div>
+    <p class="consent">Question ou difficulté · <a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="fwm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</div>
+  <div class="fline">© 2026 switchyourmind.ca · Protocole d'identité opérationnelle · v1.1</div>
+  <p class="legal">SWITCH est un programme de coaching en performance et reprogrammation identitaire. SWITCH n'est pas un service de psychothérapie au sens de la Loi 21 du Québec. SWITCH n'est ni un conseil juridique, ni un conseil financier, ni un conseil matrimonial. L'intervenant respecte ses obligations professionnelles et oriente toute situation de détresse psychologique vers un professionnel qualifié de l'Ordre des psychologues du Québec (<a href="https://www.ordrepsy.qc.ca">ordrepsy.qc.ca</a>). Aucune promesse de résultat financier précis ou temporel n'est offerte.</p>
+</footer>
+
+<script>
+  // ⚠️ COLLER ICI L'URL DU WEBHOOK GHL (Inbound Webhook du workflow "Qualification Étape 2")
+  const GHL_WEBHOOK_URL_QUALIFICATION = "";
+  const BOOKING_URL = "https://switchyourmind.ca/booking";
+
+  // Pré-remplissage des champs cachés depuis l'URL (params GHL)
+  (function prefill(){
+    const p = new URLSearchParams(location.search);
+    const map = { contact_id:"h_contact_id", prenom:"h_prenom", nom:"h_nom", email:"h_email", telephone:"h_telephone", ville:"h_ville" };
+    for (const k in map){ const v = p.get(k); if (v) document.getElementById(map[k]).value = v; }
+    const prenom = p.get("prenom");
+    if (prenom) document.getElementById("hello").textContent = "Bienvenue " + prenom + ". Tu as fait l'étape 1. On continue.";
+  })();
+
+  const form = document.getElementById("qualForm");
+  const errMsg = document.getElementById("errMsg");
+  const submitBtn = document.getElementById("submitBtn");
+
+  form.addEventListener("submit", async function(e){
+    e.preventDefault();
+    errMsg.style.display = "none";
+    if (!form.checkValidity()){
+      errMsg.style.display = "block";
+      const firstInvalid = form.querySelector(":invalid");
+      if (firstInvalid) firstInvalid.scrollIntoView({behavior:"smooth", block:"center"});
+      return;
+    }
+
+    const data = {};
+    new FormData(form).forEach((v,k)=>{ data[k] = v; });
+    data.source = "switchyourmind.ca · qualification approfondie v1.1";
+    data.step = "qualification_etape_2";
+    data.submitted_at = new Date().toISOString();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Envoi...";
+
+    try{
+      if (GHL_WEBHOOK_URL_QUALIFICATION){
+        await fetch(GHL_WEBHOOK_URL_QUALIFICATION, {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body:JSON.stringify(data)
+        });
+      } else {
+        console.warn("GHL_WEBHOOK_URL_QUALIFICATION vide : aucune soumission envoyée. Colle l'URL du webhook.");
+      }
+    } catch(err){
+      console.error("Echec POST webhook", err);
+      // On affiche quand meme l'ecran de succes pour ne pas bloquer le prospect ;
+      // la donnee reste recuperable cote support si besoin.
+    }
+
+    document.getElementById("formView").style.display = "none";
+    document.getElementById("successView").style.display = "block";
+    window.scrollTo({ top:0, behavior:"smooth" });
+    _swH();
+  });
+
+  // Reporter de hauteur pour l'iframe parent (intégration GHL)
+  function _swH(){ parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*"); }
+  window.addEventListener("load",_swH); window.addEventListener("resize",_swH); setInterval(_swH,800);
+</script>
+</body>
+</html>
