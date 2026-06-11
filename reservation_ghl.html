@@ -1,0 +1,80 @@
+<!-- ============================================================
+     SWITCH · Page « Réserve ton appel stratégique » v1.1 — bloc à
+     coller dans un élément "Custom Code / HTML" GHL (page vide,
+     pleine largeur, sans padding). Méthode recommandée : iframe vers
+     https://s1dupuis-spec.github.io/switch-landing/reservation.html
+     ============================================================ -->
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --blue:#2e9fe0; --blue-soft:#7fc0ec;
+    --white:#f4f7fa; --grey:#6b7787; --txt:#aeb8c4;
+    --line:rgba(255,255,255,0.12); --box:rgba(255,255,255,0.035);
+    --bg:#080b11;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(110% 55% at 50% 0%, rgba(46,120,180,0.30), rgba(10,14,20,0) 52%),
+      var(--bg);
+    color:var(--white);
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
+  }
+  a{ color:var(--blue); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .nav{ display:flex; justify-content:space-between; align-items:center;
+    padding:20px 7vw; border-bottom:1px solid var(--line); }
+  .wm{ color:var(--blue); font-weight:800; font-size:19px; letter-spacing:3px; }
+  .nav .ver{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; color:var(--grey); letter-spacing:2px; }
+
+  main{ flex:1; padding:56px 7vw 72px; }
+  .head{ max-width:760px; margin:0 auto; text-align:center; }
+  .eyebrow{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:4px; color:var(--blue); text-transform:uppercase; }
+  h1{ font-weight:800; font-size:clamp(34px,5.4vw,56px); line-height:1.04; letter-spacing:-1.5px; margin-top:16px; }
+  .lede{ font-size:clamp(17px,2.1vw,21px); line-height:1.55; color:var(--txt); margin-top:20px; max-width:600px; margin-left:auto; margin-right:auto; }
+  .lede b{ color:var(--white); font-weight:600; }
+
+  .booking{ max-width:1040px; margin:40px auto 0; background:#ffffff; border-radius:16px;
+    border:1px solid var(--line); overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.45); }
+  .booking iframe{ width:100%; min-height:720px; border:none; display:block; }
+
+  .help{ text-align:center; font-size:15px; color:var(--grey); margin-top:26px; }
+  .help a{ color:var(--blue-soft); }
+
+  footer{ padding:36px 7vw 56px; border-top:1px solid var(--line); }
+  .fwm{ color:var(--blue); font-weight:800; font-size:16px; letter-spacing:3px; }
+  .fline{ font-size:13px; color:var(--grey); margin-top:8px; }
+  .legal{ font-size:12px; line-height:1.7; color:var(--grey); margin-top:20px; max-width:880px; }
+</style>
+
+<nav class="nav">
+  <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
+  <span class="ver">RÉSERVATION</span>
+</nav>
+
+<main>
+  <div class="head">
+    <div class="eyebrow">Appel stratégique</div>
+    <h1>Réserve ton appel stratégique.</h1>
+    <p class="lede"><b>30 minutes.</b> On regarde où tu plafonnes, on nomme le mécanisme, et on tranche la suite. Choisis ta date ci-dessous.</p>
+  </div>
+
+  <div class="booking">
+    <iframe src="https://api.leadconnectorhq.com/widget/bookings/appel-switch"
+            scrolling="no" id="appel-switch_booking"></iframe>
+  </div>
+
+  <p class="help">Un souci pour réserver ? Écris à <a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a>.</p>
+</main>
+
+<footer>
+  <div class="fwm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</div>
+  <div class="fline">© 2026 switchyourmind.ca · Protocole d'identité opérationnelle · v1.1</div>
+  <p class="legal">SWITCH est un programme de coaching en performance et reprogrammation identitaire. SWITCH n'est pas un service de psychothérapie au sens de la Loi 21 du Québec. SWITCH n'est ni un conseil juridique, ni un conseil financier, ni un conseil matrimonial. Aucune promesse de résultat financier précis ou temporel n'est offerte.</p>
+</footer>
+
+<script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
