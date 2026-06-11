@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWITCH · Audit réservé</title>
+<meta name="description" content="Ton Audit d'Architecture est réservé. Confirmation et invitation par courriel.">
+<meta name="robots" content="noindex">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --blue:#2e9fe0; --blue-soft:#7fc0ec;
+    --white:#f4f7fa; --grey:#6b7787; --txt:#aeb8c4;
+    --line:rgba(255,255,255,0.12); --box:rgba(255,255,255,0.035);
+    --bg:#080b11;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(110% 60% at 50% 0%, rgba(46,120,180,0.30), rgba(10,14,20,0) 55%),
+      var(--bg);
+    color:var(--white);
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
+  }
+  a{ color:var(--blue); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .nav{ display:flex; justify-content:space-between; align-items:center;
+    padding:20px 7vw; border-bottom:1px solid var(--line); }
+  .wm{ color:var(--blue); font-weight:800; font-size:19px; letter-spacing:3px; }
+  .nav .ver{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; color:var(--grey); letter-spacing:2px; }
+
+  main{ flex:1; display:flex; align-items:center; justify-content:center; padding:64px 7vw; }
+  .card{ max-width:680px; width:100%; }
+  .check{ width:84px; height:84px; border-radius:50%; border:2px solid var(--blue);
+    display:flex; align-items:center; justify-content:center; margin-bottom:36px;
+    box-shadow:0 0 50px rgba(46,159,224,0.25); }
+  .check svg{ width:40px; height:40px; stroke:var(--blue); stroke-width:3; fill:none;
+    stroke-linecap:round; stroke-linejoin:round; }
+  .eyebrow{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:13px; letter-spacing:4px; color:var(--blue); text-transform:uppercase; }
+  h1{ font-weight:800; font-size:clamp(40px,6.4vw,66px); line-height:1.02; letter-spacing:-2px; margin-top:22px; }
+  h1 .pt{ color:var(--blue); }
+  .lede{ font-size:clamp(19px,2.4vw,23px); line-height:1.55; color:var(--txt); margin-top:26px; max-width:560px; }
+  .lede b{ color:var(--white); font-weight:600; }
+
+  .steps{ margin-top:44px; border-top:1px solid var(--line); }
+  .step{ display:flex; gap:22px; padding:24px 0; border-bottom:1px solid var(--line); }
+  .step .n{ font-family:"Menlo","SF Mono",ui-monospace,monospace; font-size:15px; color:var(--blue); min-width:34px; padding-top:3px; }
+  .step .b{ font-size:18px; line-height:1.5; color:var(--txt); }
+  .step .b b{ color:var(--white); font-weight:600; }
+
+  .close{ font-size:17px; line-height:1.55; color:var(--white); margin-top:30px; font-weight:600; }
+  .note{ font-size:15px; line-height:1.6; color:var(--grey); margin-top:18px; }
+  .note b{ color:var(--txt); font-weight:400; }
+
+  footer{ padding:36px 7vw 56px; border-top:1px solid var(--line); }
+  .fwm{ color:var(--blue); font-weight:800; font-size:16px; letter-spacing:3px; }
+  .fline{ font-size:13px; color:var(--grey); margin-top:8px; }
+  .legal{ font-size:12px; line-height:1.7; color:var(--grey); margin-top:20px; max-width:880px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
+  <span class="ver">AUDIT RÉSERVÉ</span>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="check" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <div class="eyebrow">Audit confirmé</div>
+    <h1>C'est réservé.<br>Ton créneau est bloqué<span class="pt">.</span></h1>
+    <p class="lede">Tu reçois la <b>confirmation et l'invitation</b> par courriel d'ici quelques minutes. Mets le rendez-vous à ton agenda tout de suite.</p>
+
+    <div class="steps">
+      <div class="step"><div class="n">01</div><div class="b"><b>Confirmation par courriel</b> · avec le lien de l'appel. Regarde tes indésirables si rien sous 5 minutes.</div></div>
+      <div class="step"><div class="n">02</div><div class="b"><b>Bloque le créneau à ton agenda.</b> Un audit, ça se prépare en y étant. Présent, pas en transit.</div></div>
+      <div class="step"><div class="n">03</div><div class="b"><b>Viens avec un cas précis.</b> Un moment récent où tu as opéré sous ta capacité. La scène brute, pas l'analyse.</div></div>
+    </div>
+
+    <p class="close">60 minutes pour cartographier ton système. On nomme le bug, on chiffre ce qu'il te coûte. Tu repars avec un diagnostic, avec ou sans SWITCH derrière.</p>
+    <p class="note"><b>Besoin de déplacer ?</b> Le lien de modification est dans ton courriel de confirmation, ou écris à <a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="fwm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</div>
+  <div class="fline">© 2026 switchyourmind.ca · Protocole d'identité opérationnelle · v1.1</div>
+  <p class="legal">SWITCH est un programme de coaching en performance et reprogrammation identitaire. SWITCH n'est pas un service de psychothérapie au sens de la Loi 21 du Québec. SWITCH n'est ni un conseil juridique, ni un conseil financier, ni un conseil matrimonial. Aucune promesse de résultat financier précis ou temporel n'est offerte.</p>
+</footer>
+
+<script>
+function _swH(){parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*");}
+window.addEventListener("load",_swH);window.addEventListener("resize",_swH);setInterval(_swH,800);
+</script>
+</body>
+</html>
