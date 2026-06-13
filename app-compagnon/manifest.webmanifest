@@ -1,0 +1,16 @@
+{
+  "name": "SWITCH · Compagnon",
+  "short_name": "SWITCH",
+  "description": "Ton protocole quotidien SWITCH : C.O.R.E. 12 min, journal, progression.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080b11",
+  "theme_color": "#080b11",
+  "lang": "fr-CA",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

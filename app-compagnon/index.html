@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080b11">
+<title>SWITCH · Compagnon</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SWITCH">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  :root{
+    --blue:#2e9fe0;--blue-soft:#7fc0ec;--white:#f4f7fa;--grey:#6b7787;--txt:#aeb8c4;
+    --line:rgba(255,255,255,0.12);--box:rgba(255,255,255,0.045);--bg:#080b11;--red:#ff8d7a;
+  }
+  html,body{height:100%;}
+  body{
+    background:radial-gradient(120% 50% at 50% 0%,rgba(46,120,180,0.22),rgba(10,14,20,0) 55%),var(--bg);
+    color:var(--white);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;line-height:1.5;
+    -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100%;
+    padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+  .mono{font-family:"Menlo","SF Mono",ui-monospace,monospace;}
+  .wm{color:var(--blue);font-weight:800;letter-spacing:3px;font-size:16px;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  .btn{display:block;width:100%;background:var(--blue);color:#04121d;font-weight:800;font-size:17px;
+    padding:16px;border-radius:11px;}
+  .btn:active{transform:scale(.99);} .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--white);}
+  .btn:disabled{opacity:.4;}
+  input,textarea,select{width:100%;background:var(--box);color:var(--white);border:1px solid var(--line);
+    border-radius:9px;padding:13px 14px;font-size:16px;font-family:inherit;margin-top:8px;-webkit-appearance:none;}
+  textarea{min-height:80px;resize:vertical;} label.q{display:block;font-size:15px;color:var(--txt);margin-top:18px;font-weight:600;}
+  .hint{font-size:12.5px;color:var(--grey);margin-top:6px;}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);}
+  header .ver{font-size:12px;color:var(--grey);letter-spacing:2px;}
+  main{flex:1;padding:22px 20px 96px;max-width:560px;margin:0 auto;width:100%;}
+  .screen{display:none;} .screen.on{display:block;animation:f .25s ease;}
+  @keyframes f{from{opacity:0;transform:translateY(6px);}to{opacity:1;}}
+
+  h1{font-size:clamp(26px,7vw,34px);font-weight:800;letter-spacing:-1px;line-height:1.1;}
+  h2{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+  .eyebrow{font-family:"Menlo",monospace;font-size:12px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;}
+  .card{background:var(--box);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px;}
+  .row{display:flex;gap:10px;} .row>*{flex:1;}
+  .big{font-size:40px;font-weight:800;letter-spacing:-1px;} .lbl{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:1.5px;}
+  .pill{display:inline-block;font-size:12px;color:var(--blue-soft);border:1px solid var(--line);border-radius:20px;padding:4px 11px;margin-top:6px;}
+  .rebound{border-color:rgba(46,159,224,.5);background:rgba(46,159,224,.08);}
+  .done{color:var(--blue);} .muted{color:var(--grey);}
+
+  /* CORE session */
+  #coreSession{position:fixed;inset:0;background:var(--bg);z-index:50;display:none;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;padding:30px;}
+  #coreSession.on{display:flex;}
+  .corePhase{font-family:"Menlo",monospace;letter-spacing:3px;color:var(--blue);font-size:13px;text-transform:uppercase;}
+  .coreTitle{font-size:26px;font-weight:800;margin-top:8px;letter-spacing:-.5px;}
+  .coreTimer{font-size:60px;font-weight:800;font-variant-numeric:tabular-nums;margin:18px 0;}
+  .coreBody{color:var(--txt);font-size:18px;line-height:1.55;max-width:420px;min-height:90px;}
+  .breath{width:150px;height:150px;border-radius:50%;border:2px solid var(--blue);margin:24px auto;
+    box-shadow:0 0 60px rgba(46,159,224,.25);transition:transform 4s ease-in-out;}
+  .breath.in{transform:scale(1.35);} .breath.out{transform:scale(.7);transition-duration:6s;}
+  .breathLabel{color:var(--blue-soft);letter-spacing:3px;font-size:13px;}
+
+  nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(8,11,17,.92);backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);padding:8px 0 calc(8px + env(safe-area-inset-bottom));}
+  nav button{flex:1;background:none;color:var(--grey);font-size:11px;letter-spacing:.5px;padding:6px;}
+  nav button .ic{display:block;font-size:19px;margin-bottom:2px;} nav button.on{color:var(--blue);}
+  footer{font-size:11px;color:var(--grey);text-align:center;padding:18px 20px;line-height:1.5;}
+  a{color:var(--blue);}
+  .flag{border-color:rgba(255,141,122,.5);background:rgba(255,141,122,.08);color:var(--white);}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
+  <span class="ver mono" id="hdrVer">COMPAGNON</span>
+</header>
+
+<main>
+  <!-- ============ ONBOARDING ============ -->
+  <section class="screen" id="scrOnboard">
+    <div class="eyebrow">Mise en route</div>
+    <h1>On installe ton protocole.</h1>
+    <p style="color:var(--txt);margin-top:14px;">Quelques infos pour calibrer tes 90 jours. Ton intervenant te les a données.</p>
+    <label class="q">Ton prénom</label>
+    <input id="obPrenom" type="text" placeholder="Prénom" autocomplete="given-name">
+    <label class="q">Date J1 (début du protocole)</label>
+    <input id="obJ1" type="date">
+    <label class="q">Ton Bug dominant</label>
+    <select id="obBug">
+      <option value="" disabled selected>Choisis...</option>
+      <option value="B1">B1 · Auto-Réduction</option>
+      <option value="B2">B2 · Justification</option>
+      <option value="B3">B3 · Dilution d'Autorité</option>
+      <option value="B4">B4 · Perfectionnisme</option>
+      <option value="B5">B5 · Sur-Service</option>
+    </select>
+    <label class="q">Heure de ton C.O.R.E.</label>
+    <input id="obHeure" type="time" value="06:30">
+    <p class="hint">Tu pourras ajuster plus tard.</p>
+    <button class="btn" style="margin-top:24px;" onclick="saveOnboard()">Entrer dans le protocole</button>
+    <p class="hint" style="margin-top:14px;">Programme de coaching en performance et reprogrammation identitaire. Cette application n'est pas un outil à visée thérapeutique.</p>
+  </section>
+
+  <!-- ============ HOME ============ -->
+  <section class="screen" id="scrHome">
+    <div class="eyebrow" id="homePhase">Phase</div>
+    <h1 id="homeHello">Bienvenue.</h1>
+    <div class="row" style="margin-top:16px;">
+      <div class="card" style="margin-top:0;"><div class="lbl">Jour</div><div class="big" id="hJ">J1</div><div class="pill" id="hSemaine">S01</div></div>
+      <div class="card" style="margin-top:0;"><div class="lbl">Daily Code</div><div class="big" id="hCode">v0</div><div class="pill" id="hAudit">Audit 01 · J3</div></div>
+    </div>
+
+    <div class="card rebound" id="hRebound" style="display:none;">
+      <h2 style="color:var(--blue);">Fenêtre Rebound</h2>
+      Entre J18 et J22, ton bug dominant se sur-active. C'est le Rebound. C'est le signe que le travail prend.
+    </div>
+
+    <div class="card" id="hCoreCard">
+      <h2>Ton C.O.R.E.</h2>
+      <div id="hCoreState" style="font-size:18px;">12 minutes. Structure fixe. Écran plein.</div>
+      <button class="btn" style="margin-top:14px;" id="hCoreBtn" onclick="startCore()">Démarrer le C.O.R.E.</button>
+    </div>
+
+    <div class="card">
+      <h2>Ton intention du jour</h2>
+      <div id="hIntention" class="muted">Tu la poses à la fin de ton C.O.R.E. (phase R).</div>
+      <button class="btn ghost" id="hIntBtn" style="margin-top:12px;display:none;" onclick="toggleIntention()">Marquer exécutée</button>
+    </div>
+  </section>
+
+  <!-- ============ JOURNAL ============ -->
+  <section class="screen" id="scrJournal">
+    <div class="eyebrow" id="jDateLbl">Aujourd'hui</div>
+    <h1>Journal</h1>
+    <div class="card">
+      <div class="lbl">C.O.R.E. fait ?</div>
+      <div id="jCore" style="font-size:18px;margin-top:4px;">Pas encore.</div>
+    </div>
+    <label class="q">Acte de Preuve <span class="muted" style="font-weight:400;">(Phase 2+)</span></label>
+    <textarea id="jActe" placeholder="Action irréversible, coût documenté, liée à ton bug."></textarea>
+    <label class="q">Recovery Time</label>
+    <input id="jRecovery" type="text" placeholder="Ex : revenu solide en 25 min après la mauvaise nouvelle.">
+    <label class="q">Mot du jour</label>
+    <input id="jMot" type="text" placeholder="Un mot, une phrase.">
+    <button class="btn" style="margin-top:20px;" onclick="saveJournal()">Enregistrer</button>
+    <div class="card flag" id="jFlag" style="display:none;">
+      Si tu vis une détresse psychologique significative, ce n'est pas le bon outil. Adresse-toi à un professionnel qualifié : <a href="https://www.ordrepsy.qc.ca" target="_blank" rel="noopener">ordrepsy.qc.ca</a>. Ton intervenant est notifié.
+    </div>
+    <h2 style="margin-top:28px;">Historique</h2>
+    <div id="jHist"></div>
+  </section>
+
+  <!-- ============ PROGRESSION ============ -->
+  <section class="screen" id="scrProg">
+    <div class="eyebrow">Suivi</div>
+    <h1>Progression</h1>
+    <div class="row" style="margin-top:16px;">
+      <div class="card" style="margin-top:0;"><div class="lbl">Série C.O.R.E.</div><div class="big" id="pStreak">0</div><div class="pill">jours d'affilée</div></div>
+      <div class="card" style="margin-top:0;"><div class="lbl">Adhérence phase</div><div class="big" id="pAdh">0%</div><div class="pill" id="pPhase">Phase 1</div></div>
+    </div>
+    <div class="card"><div class="lbl">Prochain point de bascule</div><div style="font-size:22px;font-weight:700;margin-top:4px;" id="pAudit">Audit 01 · J3</div><div class="muted mono" id="pAuditIn"></div></div>
+    <div class="card"><div class="lbl">Actes de Preuve posés</div><div class="big" id="pActes">0</div></div>
+    <button class="btn ghost" style="margin-top:20px;" onclick="openSettings()">Réglages</button>
+  </section>
+</main>
+
+<!-- ============ CORE SESSION (fullscreen) ============ -->
+<div id="coreSession">
+  <div class="corePhase" id="csPhase">C · Cohérence Autonome</div>
+  <div class="coreTitle" id="csTitle">5 minutes</div>
+  <div class="breath" id="csBreath"></div>
+  <div class="breathLabel" id="csBreathLbl">Inspire</div>
+  <div class="coreTimer" id="csTimer">05:00</div>
+  <div class="coreBody" id="csBody"></div>
+  <div style="position:fixed;bottom:30px;left:30px;right:30px;max-width:440px;margin:0 auto;">
+    <button class="btn" id="csNext" onclick="coreNext()">Phase suivante</button>
+    <button class="btn ghost" style="margin-top:10px;" onclick="quitCore()">Quitter</button>
+  </div>
+</div>
+
+<nav id="nav">
+  <button data-s="Home" class="on" onclick="go('Home')"><span class="ic">◉</span>Aujourd'hui</button>
+  <button data-s="Journal" onclick="go('Journal')"><span class="ic">▤</span>Journal</button>
+  <button data-s="Prog" onclick="go('Prog')"><span class="ic">▲</span>Progression</button>
+</nav>
+
+<footer>
+  SWITCH · Protocole d'identité opérationnelle. Programme de coaching en performance, pas un service de psychothérapie (Loi 21). Données stockées localement sur cet appareil (prototype).
+</footer>
+
+<script>
+const SELFTALK={
+  B1:["[P] affiche son prix plein.","[P] se tait après."],
+  B2:["[P] laisse le silence faire son travail."],
+  B3:["[P] tient son registre quelle que soit la pièce."],
+  B4:["[P] livre au standard demandé.","[P] ferme."],
+  B5:["[P] porte ce qui est à lui.","[P] laisse le reste."]
+};
+const BUGNAME={B1:"Auto-Réduction",B2:"Justification",B3:"Dilution d'Autorité",B4:"Perfectionnisme",B5:"Sur-Service"};
+const SEMAINES=["Diagnostic","Bug Dominant","Code Racine","Rebound","Nouveau Niveau","Acte de Preuve","Densité","Cartographie","Recalibrage","Directive Exécutive","Acte de Palier","Autonomie Post-Programme"];
+const AUDITS=[{n:"01",j:3},{n:"02",j:21},{n:"03",j:45},{n:"04",j:70},{n:"05",j:90}];
+const RED_WORDS=/(suicide|me faire du mal|en finir|d[ée]sespoir|plus envie de vivre|panique)/i;
+
+let S=JSON.parse(localStorage.getItem('switch_state')||'null');
+function save(){localStorage.setItem('switch_state',JSON.stringify(S));}
+function todayKey(){return new Date().toISOString().slice(0,10);}
+function jNumber(){const j1=new Date(S.dateJ1+'T00:00:00');const now=new Date();const d=Math.floor((now-j1)/86400000)+1;return Math.max(1,d);}
+function phaseOf(j){if(j<=21)return{n:1,nom:"Activation + Conflit",verbe:"Tu observes"};if(j<=45)return{n:2,nom:"Consolidation fragile",verbe:"Tu installes"};if(j<=75)return{n:3,nom:"Densité / Position",verbe:"Tu amplifies"};return{n:4,nom:"Généralisation",verbe:"Tu généralises"};}
+function semaineOf(j){return Math.min(12,Math.ceil(j/7));}
+function codeOf(j){if(j<3)return"v0";if(j<21)return"v1";if(j<70)return"v2";return"v3";}
+function nextAudit(j){return AUDITS.find(a=>a.j>=j)||null;}
+
+function go(s){document.querySelectorAll('.screen').forEach(e=>e.classList.remove('on'));
+  document.getElementById('scr'+s).classList.add('on');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+  if(s==='Home')renderHome();if(s==='Journal')renderJournal();if(s==='Prog')renderProg();}
+
+function saveOnboard(){
+  const prenom=obPrenom.value.trim(),j1=obJ1.value,bug=obBug.value,heure=obHeure.value;
+  if(!prenom||!j1||!bug){alert("Remplis prénom, date J1 et bug dominant.");return;}
+  S={prenom,dateJ1:j1,bug,heureCore:heure,entries:{}};save();
+  document.getElementById('nav').style.display='flex';go('Home');
+}
+
+function renderHome(){
+  const j=jNumber(),ph=phaseOf(j),sem=semaineOf(j),code=codeOf(j),na=nextAudit(j);
+  homePhase.textContent="Phase "+ph.n+" · "+ph.verbe;
+  homeHello.textContent="Salut "+S.prenom+".";
+  hJ.textContent="J"+j;hSemaine.textContent="S"+String(sem).padStart(2,'0')+" · "+SEMAINES[sem-1];
+  hCode.textContent=code;hAudit.textContent=na?("Audit "+na.n+" · J"+na.j):"Protocole complété";
+  hRebound.style.display=(j>=18&&j<=22)?'block':'none';
+  const e=S.entries[todayKey()]||{};
+  if(e.coreDone){hCoreState.innerHTML='<span class="done">✓ C.O.R.E. fait aujourd\'hui.</span>';hCoreBtn.textContent="Refaire";}
+  else{hCoreState.textContent="12 minutes. Structure fixe. Écran plein.";hCoreBtn.textContent="Démarrer le C.O.R.E.";}
+  if(e.intention){hIntention.innerHTML=(e.intentionDone?'<span class="done">✓ ':'<span>')+e.intention+'</span>';hIntBtn.style.display='block';hIntBtn.textContent=e.intentionDone?"Annuler":"Marquer exécutée";}
+  else{hIntention.textContent="Tu la poses à la fin de ton C.O.R.E. (phase R).";hIntBtn.style.display='none';}
+  hdrVer.textContent="J"+j+" · "+code;
+}
+function toggleIntention(){const e=S.entries[todayKey()];if(!e)return;e.intentionDone=!e.intentionDone;save();renderHome();}
+
+/* ---------- CORE SESSION ---------- */
+let core={phase:0,left:0,timer:null,breath:null};
+const PHASES=[
+  {key:"C",label:"C · Cohérence Autonome",dur:300,body:"Respiration de résonance. Inspire 4 secondes, expire 6. Suis le cercle."},
+  {key:"O",label:"O · Override Cognitif",dur:240,body:""},
+  {key:"R",label:"R · Réalisation Ancrée",dur:180,body:"Écris ton intention. Si [trigger observable], alors [action de moins de 30 s]."}
+];
+function startCore(){core.phase=0;document.getElementById('coreSession').classList.add('on');runPhase();}
+function runPhase(){
+  const p=PHASES[core.phase];core.left=p.dur;
+  csPhase.textContent=p.label;csTitle.textContent=Math.round(p.dur/60)+" minutes";
+  csNext.textContent=core.phase<2?"Phase suivante":"Terminer";
+  // body per phase
+  if(p.key==="O"){const ph=(SELFTALK[S.bug]||[]).map(x=>x.replaceAll('[P]',S.prenom)).join(" ");csBody.innerHTML='<span class="muted mono">Yeux fermés. 3e personne.</span><br><br>'+ph;}
+  else if(p.key==="R"){csBody.innerHTML='<input id="csIntention" type="text" placeholder="Si..., alors..." style="margin-top:6px;">';
+    const pre=(S.entries[todayKey()]||{}).intention;if(pre)setTimeout(()=>{const el=document.getElementById('csIntention');if(el)el.value=pre;},30);}
+  else csBody.textContent=p.body;
+  // breathing only on phase C
+  const showBreath=p.key==="C";csBreath.style.display=showBreath?'block':'none';csBreathLbl.style.display=showBreath?'block':'none';
+  if(showBreath)startBreath();else stopBreath();
+  tick();clearInterval(core.timer);core.timer=setInterval(tick,1000);
+}
+function tick(){
+  const m=String(Math.floor(core.left/60)).padStart(2,'0'),s=String(core.left%60).padStart(2,'0');
+  csTimer.textContent=m+":"+s;
+  if(core.left<=0){coreNext();return;}
+  core.left--;
+}
+function startBreath(){let inhale=true;csBreath.className='breath in';csBreathLbl.textContent='Inspire';
+  core.breath=setInterval(()=>{inhale=!inhale;csBreath.className='breath '+(inhale?'in':'out');csBreathLbl.textContent=inhale?'Inspire':'Expire';},inhale?4000:6000);
+  // simple alternation ~ every 5s
+  clearInterval(core.breath);let st=true;core.breath=setInterval(()=>{st=!st;csBreath.className='breath '+(st?'in':'out');csBreathLbl.textContent=st?'Inspire':'Expire';},5000);
+}
+function stopBreath(){clearInterval(core.breath);}
+function coreNext(){
+  if(PHASES[core.phase].key==="R"){const el=document.getElementById('csIntention');if(el&&el.value.trim()){const e=ensureEntry();e.intention=el.value.trim();save();}}
+  core.phase++;
+  if(core.phase>=PHASES.length){finishCore();return;}
+  runPhase();
+}
+function finishCore(){clearInterval(core.timer);stopBreath();
+  const e=ensureEntry();e.coreDone=true;e.coreAt=new Date().toISOString();e.codeVersion=codeOf(jNumber());save();
+  document.getElementById('coreSession').classList.remove('on');go('Home');
+  alert("C.O.R.E. fait. Marqué dans ton journal.");
+}
+function quitCore(){clearInterval(core.timer);stopBreath();document.getElementById('coreSession').classList.remove('on');}
+function ensureEntry(){const k=todayKey();if(!S.entries[k])S.entries[k]={};return S.entries[k];}
+
+/* ---------- JOURNAL ---------- */
+function renderJournal(){
+  const e=S.entries[todayKey()]||{};
+  jCore.innerHTML=e.coreDone?'<span class="done">✓ Fait'+(e.codeVersion?' ('+e.codeVersion+')':'')+'</span>':'Pas encore.';
+  jActe.value=e.acteDePreuve||'';jRecovery.value=e.recoveryTime||'';jMot.value=e.motDuJour||'';
+  let h='';const keys=Object.keys(S.entries).sort().reverse();
+  for(const k of keys){const en=S.entries[k];h+='<div class="card"><div class="lbl">'+k+'</div>'+
+    (en.coreDone?'<span class="done">C.O.R.E. ✓</span> ':'<span class="muted">C.O.R.E. —</span> ')+
+    (en.motDuJour?'· '+en.motDuJour:'')+
+    (en.acteDePreuve?'<div style="margin-top:6px;font-size:14px;color:var(--txt);">Acte : '+en.acteDePreuve+'</div>':'')+'</div>';}
+  jHist.innerHTML=h||'<p class="muted">Ton historique apparaîtra ici.</p>';
+}
+function saveJournal(){
+  const e=ensureEntry();e.acteDePreuve=jActe.value.trim();e.recoveryTime=jRecovery.value.trim();e.motDuJour=jMot.value.trim();save();
+  const txt=(e.motDuJour+' '+e.recoveryTime);jFlag.style.display=RED_WORDS.test(txt)?'block':'none';
+  renderJournal();
+  if(!RED_WORDS.test(txt))alert("Enregistré.");
+}
+
+/* ---------- PROGRESSION ---------- */
+function renderProg(){
+  const j=jNumber(),ph=phaseOf(j),na=nextAudit(j);
+  // streak
+  let streak=0;let d=new Date();for(;;){const k=d.toISOString().slice(0,10);if(S.entries[k]&&S.entries[k].coreDone){streak++;d.setDate(d.getDate()-1);}else break;}
+  pStreak.textContent=streak;
+  // adherence in current phase
+  const pr={1:[1,21],2:[22,45],3:[46,75],4:[76,90]}[ph.n];const start=pr[0],end=Math.min(j,pr[1]);let done=0,tot=0;
+  for(let x=start;x<=end;x++){tot++;const dt=new Date(S.dateJ1+'T00:00:00');dt.setDate(dt.getDate()+x-1);const k=dt.toISOString().slice(0,10);if(S.entries[k]&&S.entries[k].coreDone)done++;}
+  pAdh.textContent=(tot?Math.round(done/tot*100):0)+"%";pPhase.textContent="Phase "+ph.n;
+  pAudit.textContent=na?("Audit "+na.n+" · J"+na.j):"Protocole complété";pAuditIn.textContent=na?("dans "+(na.j-j)+" jours"):"";
+  let actes=0;for(const k in S.entries)if((S.entries[k].acteDePreuve||'').length>3)actes++;pActes.textContent=actes;
+}
+function openSettings(){
+  const h=prompt("Heure du C.O.R.E. (HH:MM)",S.heureCore||"06:30");if(h)S.heureCore=h;
+  if(confirm("Réinitialiser toutes tes données locales ? (annule = non)")){if(confirm("Confirmer la réinitialisation ?")){localStorage.removeItem('switch_state');location.reload();return;}}
+  save();
+}
+
+/* ---------- BOOT ---------- */
+function boot(){
+  if(!S){document.getElementById('nav').style.display='none';document.getElementById('scrOnboard').classList.add('on');}
+  else{go('Home');}
+}
+boot();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+</script>
+</body>
+</html>
