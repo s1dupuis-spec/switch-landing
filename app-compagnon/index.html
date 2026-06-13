@@ -330,6 +330,9 @@ function openSettings(){
 
 /* ---------- BOOT ---------- */
 function boot(){
+  const params=new URLSearchParams(location.search);
+  if(params.has('new')||params.has('reset')){localStorage.removeItem('switch_state');S=null;
+    if(history.replaceState)history.replaceState(null,'',location.pathname);}
   if(!S){document.getElementById('nav').style.display='none';document.getElementById('scrOnboard').classList.add('on');}
   else{go('Home');}
 }
