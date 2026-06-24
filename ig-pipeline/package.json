@@ -1,0 +1,9 @@
+{
+  "name": "switch-ig-pipeline",
+  "private": true,
+  "type": "module",
+  "description": "Rendu carte SWITCH (SVG->PNG) + publication Instagram via Graph API.",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}
