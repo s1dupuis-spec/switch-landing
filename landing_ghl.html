@@ -23,6 +23,12 @@
   .blue{ color:var(--blue); }
   .wrap{ max-width:1000px; margin:0 auto; padding:0 7vw; }
   .narrow{ max-width:820px; }
+  /* ---- Conteneur plein écran (couvre le fond blanc de GHL, ajout) ---- */
+  html,body{ background:#080b11; }
+  #sw-page{ background:#080b11; color:var(--white);
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;
+    overflow-x:hidden; }
 
   /* ---- NAV ---- */
   .nav{ position:sticky; top:0; z-index:50; display:flex; justify-content:space-between; align-items:center;
@@ -207,6 +213,8 @@
     section{ padding:60px 0; }
   }
 </style>
+
+<div id="sw-page">
 
 <nav class="nav">
   <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
@@ -456,6 +464,8 @@
     <div class="src">SWITCH · Landing v1.3 · juin 2026 · Document traçable Bible v1.1 FINALE · Prochaine révision novembre 2026</div>
   </div>
 </footer>
+
+</div><!-- /#sw-page -->
 
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
 <script>
