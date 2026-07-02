@@ -54,6 +54,13 @@
     #floatcta.show{ transform:translateY(0); }
     #floatcta a{ display:block; text-align:center; font-size:16px; padding:16px 20px; }
   }
+  /* ---- Portrait intervenant (ajout seul) ---- */
+  .introphoto{ float:right; width:300px; height:300px; object-fit:cover; object-position:50% 30%;
+    border-radius:12px; border:1px solid var(--line); margin:6px 0 22px 36px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.42); }
+  @media(max-width:680px){
+    .introphoto{ float:none; display:block; width:100%; max-width:280px; height:auto; aspect-ratio:1/1; margin:0 0 26px 0; }
+  }
   .btnrow{ display:flex; flex-wrap:wrap; gap:16px; margin-top:38px; }
 
   /* eyebrow / section heads */
@@ -337,6 +344,24 @@
           <li>T'as pas la capacité d'investissement pour un protocole exigeant.</li>
         </ul></div>
     </div>
+  </div>
+</section>
+
+<!-- ===== INTERVENANT · BIO (ajout seul) ===== -->
+<section id="intervenant">
+  <div class="wrap narrow">
+    <img class="introphoto" src="assets/sebastien.jpg" alt="Sébastien Dupuis, fondateur de SWITCH" width="1254" height="1254">
+    <div class="eyebrow">L'intervenant</div>
+    <h2 class="sechead">Moi, c'est <span class="blue">Sébastien.</span></h2>
+    <p style="margin-top:22px;">Si t'es ici, c'est que quelque chose revient. Le même plafond, malgré tes efforts. Tu avances, tu fais les choses comme il faut, et ça bute au même endroit.</p>
+    <p style="margin-top:16px;"><b>J'ai été là.</b></p>
+    <p style="margin-top:16px;">15 ans à la tête de mes centres sportifs. Puis une carrière en vente, jusqu'à diriger une boutique haut de gamme. Sur papier, tout roulait.</p>
+    <p style="margin-top:16px;">En dedans, il y avait un mur. Je lisais, je me formais, je poussais plus fort. Le résultat revenait au même niveau.</p>
+    <p style="margin-top:16px;">Le problème, c'était pas ma méthode. C'était mon identité. Ton cerveau te ramène à ton niveau habituel, tout seul. Un setpoint.</p>
+    <p class="hit" style="margin-top:30px;">Tu plafonnes pas à cause de tes efforts. Tu plafonnes à cause de l'identité que tu refuses de dépasser.</p>
+    <p style="margin-top:30px;">J'ai construit SWITCH pour ça. Un protocole d'identité opérationnelle. 90 jours pour installer un nouveau setpoint en décision, en autorité et en standard tenu.</p>
+    <p style="margin-top:16px;">Pas une promesse de résultat. Un diagnostic, une installation, une sortie autonome au J90.</p>
+    <p style="margin-top:16px;">Si ton plafond est identitaire, l'Audit d'Architecture le nomme. <b>60 minutes, gratuit. Il peut finir en refus.</b></p>
   </div>
 </section>
 
