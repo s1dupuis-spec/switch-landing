@@ -38,6 +38,28 @@
   .btn.primary:hover{ background:#46aeea; transform:translateY(-2px); }
   .btn.ghost{ border:1px solid var(--line); color:var(--white); }
   .btn.ghost:hover{ border-color:var(--blue); color:var(--blue-soft); }
+  /* ---- Floating reserve CTA (accès permanent, ajout seul) ---- */
+  #floatcta{ position:fixed; top:20px; left:50%; z-index:60;
+    transform:translateX(-50%) translateY(-6px); opacity:0; visibility:hidden;
+    transition:opacity .2s ease, transform .2s ease; }
+  #floatcta.show{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  #floatcta a{ display:inline-block; font-weight:700; font-size:15px; letter-spacing:0.3px; white-space:nowrap;
+    padding:13px 24px; border-radius:8px; background:var(--blue); color:#04121c;
+    box-shadow:0 0 40px rgba(46,159,224,0.28); transition:transform .2s ease, background .15s ease; }
+  #floatcta a:hover{ background:#46aeea; transform:translateY(-2px) scale(1.03); }
+  @media(max-width:680px){
+    #floatcta{ top:auto; left:16px; right:16px; transform:translateY(8px);
+      bottom:calc(16px + env(safe-area-inset-bottom)); }
+    #floatcta.show{ transform:translateY(0); }
+    #floatcta a{ display:block; text-align:center; font-size:16px; padding:16px 20px; }
+  }
+  /* ---- Portrait intervenant (ajout seul) ---- */
+  .introphoto{ float:right; width:300px; height:300px; object-fit:cover; object-position:50% 30%;
+    border-radius:12px; border:1px solid var(--line); margin:6px 0 22px 36px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.42); }
+  @media(max-width:680px){
+    .introphoto{ float:none; display:block; width:100%; max-width:280px; height:auto; aspect-ratio:1/1; margin:0 0 26px 0; }
+  }
   .btnrow{ display:flex; flex-wrap:wrap; gap:16px; margin-top:38px; }
 
   /* eyebrow / section heads */
@@ -191,6 +213,9 @@
   <a class="navcta" href="#form">Réserver mon Audit →</a>
 </nav>
 
+<!-- Floating reserve CTA (accès permanent, ajout seul) -->
+<div id="floatcta"><a href="#form">Réserver mon Audit d'Architecture</a></div>
+
 <!-- ===== HERO ===== -->
 <header class="hero">
   <div class="wrap inner">
@@ -319,6 +344,24 @@
   </div>
 </section>
 
+<!-- ===== INTERVENANT · BIO (ajout seul) ===== -->
+<section id="intervenant">
+  <div class="wrap narrow">
+    <img class="introphoto" src="https://s1dupuis-spec.github.io/switch-landing/assets/sebastien.jpg" alt="Sébastien Dupuis, fondateur de SWITCH" width="1254" height="1254">
+    <div class="eyebrow">L'intervenant</div>
+    <h2 class="sechead">Moi, c'est <span class="blue">Sébastien.</span></h2>
+    <p style="margin-top:22px;">Si t'es ici, c'est que quelque chose revient. Le même plafond, malgré tes efforts. Tu avances, tu fais les choses comme il faut, et ça bute au même endroit.</p>
+    <p style="margin-top:16px;"><b>J'ai été là.</b></p>
+    <p style="margin-top:16px;">15 ans à la tête de mes centres sportifs. Puis une carrière en vente, jusqu'à diriger une boutique haut de gamme. Sur papier, tout roulait.</p>
+    <p style="margin-top:16px;">En dedans, il y avait un mur. Je lisais, je me formais, je poussais plus fort. Le résultat revenait au même niveau.</p>
+    <p style="margin-top:16px;">Le problème, c'était pas ma méthode. C'était mon identité. Ton cerveau te ramène à ton niveau habituel, tout seul. Un setpoint.</p>
+    <p class="hit" style="margin-top:30px;">Tu plafonnes pas à cause de tes efforts. Tu plafonnes à cause de l'identité que tu refuses de dépasser.</p>
+    <p style="margin-top:30px;">J'ai construit SWITCH pour ça. Un protocole d'identité opérationnelle. 90 jours pour installer un nouveau setpoint en décision, en autorité et en standard tenu.</p>
+    <p style="margin-top:16px;">Pas une promesse de résultat. Un diagnostic, une installation, une sortie autonome au J90.</p>
+    <p style="margin-top:16px;">Si ton plafond est identitaire, l'Audit d'Architecture le nomme. <b>60 minutes, gratuit. Il peut finir en refus.</b></p>
+  </div>
+</section>
+
 <!-- ===== AUDIT ===== -->
 <section id="audit">
   <div class="wrap narrow">
@@ -415,3 +458,18 @@
 </footer>
 
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+<script>
+/* CTA flottant : fade-in après 15% de scroll, puis reste visible en permanence. */
+(function(){
+  var cta = document.getElementById('floatcta');
+  if(!cta) return;
+  function upd(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? window.scrollY / h : 0;
+    cta.classList.toggle('show', p > 0.15);
+  }
+  window.addEventListener('scroll', upd, { passive:true });
+  window.addEventListener('resize', upd);
+  upd();
+})();
+</script>
