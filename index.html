@@ -39,6 +39,21 @@
   .btn.primary:hover{ background:#46aeea; transform:translateY(-2px); }
   .btn.ghost{ border:1px solid var(--line); color:var(--white); }
   .btn.ghost:hover{ border-color:var(--blue); color:var(--blue-soft); }
+  /* ---- Floating reserve CTA (accès permanent, ajout seul) ---- */
+  #floatcta{ position:fixed; top:20px; left:50%; z-index:60;
+    transform:translateX(-50%) translateY(-6px); opacity:0; visibility:hidden;
+    transition:opacity .2s ease, transform .2s ease; }
+  #floatcta.show{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  #floatcta a{ display:inline-block; font-weight:700; font-size:15px; letter-spacing:0.3px; white-space:nowrap;
+    padding:13px 24px; border-radius:8px; background:var(--blue); color:#04121c;
+    box-shadow:0 0 40px rgba(46,159,224,0.28); transition:transform .2s ease, background .15s ease; }
+  #floatcta a:hover{ background:#46aeea; transform:translateY(-2px) scale(1.03); }
+  @media(max-width:680px){
+    #floatcta{ top:auto; left:16px; right:16px; transform:translateY(8px);
+      bottom:calc(16px + env(safe-area-inset-bottom)); }
+    #floatcta.show{ transform:translateY(0); }
+    #floatcta a{ display:block; text-align:center; font-size:16px; padding:16px 20px; }
+  }
   .btnrow{ display:flex; flex-wrap:wrap; gap:16px; margin-top:38px; }
 
   /* eyebrow / section heads */
@@ -193,6 +208,9 @@
   <span class="wm">S&#8226;W&#8226;I&#8226;T&#8226;C&#8226;H</span>
   <a class="navcta" href="#form">Réserver mon Audit →</a>
 </nav>
+
+<!-- Floating reserve CTA (accès permanent, ajout seul) -->
+<div id="floatcta"><a href="#form">Réserver mon Audit d'Architecture</a></div>
 
 <!-- ===== HERO ===== -->
 <header class="hero">
@@ -439,6 +457,21 @@ document.addEventListener('click', function(ev){
 <script>
 function _swH(){parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*");}
 window.addEventListener("load",_swH);window.addEventListener("resize",_swH);setInterval(_swH,800);
+</script>
+<script>
+/* CTA flottant : fade-in après 15% de scroll, puis reste visible en permanence. */
+(function(){
+  var cta = document.getElementById('floatcta');
+  if(!cta) return;
+  function upd(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? window.scrollY / h : 0;
+    cta.classList.toggle('show', p > 0.15);
+  }
+  window.addEventListener('scroll', upd, { passive:true });
+  window.addEventListener('resize', upd);
+  upd();
+})();
 </script>
 </body>
 </html>
