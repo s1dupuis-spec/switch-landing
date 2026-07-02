@@ -480,7 +480,10 @@ document.addEventListener('click', function(ev){
 </script>
 <script src="https://link.msgsndr.com/js/form_embed.js"></script>
 <script>
-function _swH(){parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*");}
+function _swH(){
+  var f=document.getElementById('form');
+  parent.postMessage({switchHeight:document.documentElement.scrollHeight, switchFormTop:(f?f.offsetTop:null)},"*");
+}
 window.addEventListener("load",_swH);window.addEventListener("resize",_swH);setInterval(_swH,800);
 </script>
 <script>
