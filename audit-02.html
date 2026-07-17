@@ -85,6 +85,17 @@
   if(el&&box){ el.textContent=s; box.style.display='flex'; }
 })();
 </script>
+<script>
+/* Pré-remplir le formulaire GHL avec les infos passées par l'app (?first_name=...&phone=...&email=...) */
+(function(){
+  var q=new URLSearchParams(location.search), pre=new URLSearchParams();
+  ['first_name','last_name','name','email','phone'].forEach(function(k){ if(q.get(k)) pre.set(k,q.get(k)); });
+  if(!pre.toString()) return;
+  var ifr=document.querySelector('.sw-cal iframe');
+  if(!ifr) return;
+  ifr.src = ifr.src + (ifr.src.indexOf('?')>-1?'&':'?') + pre.toString();
+})();
+</script>
 <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
 <script>
 /* Auto-resize dans l'iframe GHL (même convention que reservation.html) */
