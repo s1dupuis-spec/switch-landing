@@ -102,6 +102,19 @@
       var(--plate);
     background-size:cover; background-repeat:no-repeat;
     background-position:center, center right; }
+  /* BANDE HAUTE — pour une section LONGUE.
+     Constate le 2026-08-15 : sur la section des cinq couches, haute de ~1370 px,
+     un fond en `cover` zoome l'image a l'extreme et la passe derriere tout le
+     corps de texte ; les lignes couraient sur des reflets clairs et devenaient
+     penibles. Ici la photo n'occupe que le haut, a ratio conserve, et s'eteint
+     en navy plein avant le debut de la liste. Le titre est sur la photo, le
+     contenu est sur du navy. */
+  .plate.bande{
+    background-image:
+      linear-gradient(180deg, rgba(8,11,17,0.58) 0%, rgba(8,11,17,0.80) 38%, rgba(8,11,17,0.96) 64%, #080b11 78%),
+      var(--plate);
+    background-size:100% 860px, 100% auto;
+    background-position:center top, center top; }
   /* plaque dont le point d'interet est proche du centre : scrim allege a droite */
   .plate.doux{
     background-image:
@@ -317,7 +330,7 @@
 </section>
 
 <!-- ===== ARCHITECTURE ===== -->
-<section class="plate" style="--plate:url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-couches-escalier.jpg')">
+<section class="plate bande" style="--plate:url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-couches-escalier.jpg')">
   <div class="wrap">
     <div class="eyebrow">L'architecture SWITCH</div>
     <h2 class="sechead">Cinq couches.<br><span class="blue">Un seul système.</span></h2>
