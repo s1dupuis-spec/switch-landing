@@ -138,7 +138,21 @@
   .hero .micro{ font-size:15px; line-height:1.55; color:var(--grey); margin-top:24px; max-width:620px; font-style:italic; }
 
   /* ---- PHRASE SOUCHE band ---- */
-  .souche{ background:rgba(46,159,224,0.06); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:88px 7vw; text-align:center; }
+  /* PHRASE SOUCHE — plaque SUITS ajoutee le 2026-08-15.
+     Le texte est centre, donc la plaque a ete generee avec le centre calme :
+     un corridor symetrique, plafond a caissons qui pese, mur nu au fond.
+     C'est de l'architecture, pas une illustration du mot plafond — on ne
+     retombe pas dans l'analogie qu'on vient de sortir de la page.
+     Le scrim est RADIAL et non lateral : le texte occupe le milieu. */
+  .souche{ border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:88px 7vw; text-align:center; background-color:var(--bg);
+    background-image:
+      radial-gradient(72% 110% at 50% 50%, rgba(8,11,17,0.90) 0%, rgba(8,11,17,0.80) 52%, rgba(8,11,17,0.58) 100%),
+      linear-gradient(0deg, rgba(46,159,224,0.06), rgba(46,159,224,0.06)),
+      url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-souche-plafond-caisson.jpg');
+    background-size:cover, cover, cover;
+    background-position:center, center, center 16%;
+    background-repeat:no-repeat; }
   .souche p{ font-weight:700; font-size:clamp(26px,4vw,44px); line-height:1.22; letter-spacing:-1px; color:#fff; max-width:920px; margin:0 auto; }
   .souche .accent{ color:var(--blue); }
 
