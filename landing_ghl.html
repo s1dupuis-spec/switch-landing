@@ -115,12 +115,45 @@
      penibles. Ici la photo n'occupe que le haut, a ratio conserve, et s'eteint
      en navy plein avant le debut de la liste. Le titre est sur la photo, le
      contenu est sur du navy. */
+  /* --bande se regle par section : la photo doit s'eteindre AVANT le contenu,
+     et le contenu ne commence pas a la meme hauteur partout.
+     ATTENTION, piege rencontre le 2026-08-17 : il ne faut PAS piloter la HAUTEUR
+     du degrade. L'image est en `100% auto`, donc haute de ~850 px ; un degrade
+     plus court la laisse ressortir en plein sous les cartes, sans aucun scrim.
+     On pilote les ARRETS du degrade en px, et on lui donne une boite plus haute
+     que n'importe quelle image : apres son dernier arret il reste navy opaque. */
   .plate.bande{
     background-image:
-      linear-gradient(180deg, rgba(8,11,17,0.58) 0%, rgba(8,11,17,0.80) 38%, rgba(8,11,17,0.96) 64%, #080b11 78%),
+      linear-gradient(180deg,
+        rgba(8,11,17,0.58) 0,
+        rgba(8,11,17,0.80) calc(var(--bande,860px) * 0.38),
+        rgba(8,11,17,0.96) calc(var(--bande,860px) * 0.64),
+        #080b11            calc(var(--bande,860px) * 0.78)),
       var(--plate);
-    background-size:100% 860px, 100% auto;
+    background-size:100% 1600px, 100% auto;
     background-position:center top, center top; }
+  /* SPLIT — texte a gauche, image a droite, sur une section a cartes.
+     Le scrim lateral de .plate suffit pour un texte etroit, mais pas pour une
+     grille qui prend toute la largeur : les cartes traversaient l'image et se
+     lisaient sur des reflets. On confine donc le CONTENU a une colonne gauche
+     et on laisse la droite a la photo. Le bord gauche reste aligne sur celui
+     des autres sections, c'est .wrap qui continue de le poser. */
+  .plate.split .sechead,
+  .plate.split .sintro,
+  .plate.split .eyebrow{ max-width:560px; }
+  .plate.split .cards3,
+  .plate.split .res4{ grid-template-columns:repeat(2,minmax(0,1fr)); max-width:560px; }
+  @media(max-width:900px){
+    /* sous 900 px il n'y a plus de place pour deux colonnes : le contenu reprend
+       toute la largeur et la photo redevient une simple texture derriere. */
+    .plate.split .sechead,
+    .plate.split .sintro,
+    .plate.split .eyebrow,
+    .plate.split .cards3,
+    .plate.split .res4{ max-width:none; }
+    .plate.split .cards3,
+    .plate.split .res4{ grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+  }
   /* plaque dont le point d'interet est proche du centre : scrim allege a droite */
   .plate.doux{
     background-image:
@@ -154,10 +187,10 @@
   .souche{ border-top:1px solid var(--line); border-bottom:1px solid var(--line);
     padding:88px 7vw; text-align:center; background-color:var(--bg);
     background-image:
-      radial-gradient(66% 105% at 50% 46%, rgba(8,11,17,0.80) 0%, rgba(8,11,17,0.58) 55%, rgba(8,11,17,0.18) 100%),
-      url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-souche-plancher-lumiere.jpg');
+      radial-gradient(62% 100% at 50% 44%, rgba(8,11,17,0.72) 0%, rgba(8,11,17,0.42) 58%, rgba(8,11,17,0.06) 100%),
+      url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-souche-reflet.jpg');
     background-size:cover, cover;
-    background-position:center, center 34%;
+    background-position:center, center 84%;
     background-repeat:no-repeat; }
   .souche p{ font-weight:700; font-size:clamp(26px,4vw,44px); line-height:1.22; letter-spacing:-1px; color:#fff; max-width:920px; margin:0 auto; }
   .souche .accent{ color:var(--blue); }
@@ -331,7 +364,7 @@
 </section>
 
 <!-- ===== LE COÛT · ÉTUDE DE CAS ===== -->
-<section class="plate" style="--plate:url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-cout-bureau-vide.jpg')">
+<section>
   <div class="wrap narrow">
     <div class="eyebrow">Le coût · étude de cas composite</div>
     <h2 class="sechead">Le bug à<br><span class="blue">156 000 $.</span></h2>
@@ -356,7 +389,7 @@
 </section>
 
 <!-- ===== ARCHITECTURE ===== -->
-<section class="plate bande" style="--plate:url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-couches-escalier.jpg')">
+<section>
   <div class="wrap">
     <div class="eyebrow">L'architecture SWITCH</div>
     <h2 class="sechead">Cinq couches.<br><span class="blue">Un seul système.</span></h2>
@@ -382,7 +415,7 @@
 </section>
 
 <!-- ===== CE QUE LES PARTICIPANTS OBSERVENT ===== -->
-<section>
+<section class="plate split" style="--plate:url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-couches-escalier.jpg')">
   <div class="wrap">
     <div class="eyebrow">Ce que les participants observent</div>
     <h2 class="sechead">Pas des promesses.<br><span class="blue">Des conséquences mesurables.</span></h2>
@@ -397,7 +430,7 @@
 </section>
 
 <!-- ===== POUR QUI ===== -->
-<section class="plate doux" style="--plate:url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-categorie-portes.jpg')">
+<section>
   <div class="wrap">
     <div class="eyebrow">Pour qui</div>
     <h2 class="sechead">SWITCH est conçu pour<br><span class="blue">une catégorie précise.</span></h2>
@@ -425,10 +458,10 @@
 <!-- ===== INTERVENANT · BIO (ajout seul) ===== -->
 <section id="intervenant">
   <div class="wrap narrow">
-    <img class="introphoto" src="https://s1dupuis-spec.github.io/switch-landing/assets/sebastien-fond-uni.jpg" alt="Sébastien Dupuis, fondateur de SWITCH" width="1254" height="1254">
+    <img class="introphoto" src="https://s1dupuis-spec.github.io/switch-landing/assets/sebastien-blanc.jpg" alt="Sébastien Dupuis, fondateur de SWITCH" width="1254" height="1254">
     <div class="eyebrow">L'intervenant</div>
     <h2 class="sechead">Moi, c'est <span class="blue">Sébastien.</span></h2>
-    <p style="margin-top:22px;">Si t'es ici, c'est que quelque chose revient. Le même plafond, malgré tes efforts. Tu avances, tu fais les choses comme il faut, et ça bute au même endroit.</p>
+    <p style="margin-top:22px;">Si t'es ici, c'est que quelque chose revient. Le même plafond, malgré tes efforts. Tu avances, tu fais les choses comme il faut, et ça bloque au même endroit.</p>
     <p style="margin-top:16px;"><b>J'ai été là.</b></p>
     <p style="margin-top:16px;">15 ans à la tête de mes centres sportifs. Puis une carrière en vente, jusqu'à diriger une boutique haut de gamme. Sur papier, tout roulait.</p>
     <p style="margin-top:16px;">En dedans, il y avait un mur. Je lisais, je me formais, je poussais plus fort. Le résultat revenait au même niveau.</p>
