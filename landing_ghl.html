@@ -140,21 +140,24 @@
   /* ---- PHRASE SOUCHE band ---- */
   /* PHRASE SOUCHE — plaque SUITS ajoutee le 2026-08-15.
      Le texte est centre, donc la plaque a ete generee avec le centre calme :
-     un sol de pierre noire polie, pris a ras, avec les longues reflexions des
-     encastres qui s'y etirent. Fond noir reflechissant demande par Seb le
-     2026-08-17, en remplacement du plafond a caissons.
+     un plancher noir et deux nappes de lumiere rasantes, rien d'autre. Genere
+     en MODE MATIERE (5e argument du generateur) : le prompt du monde SUITS
+     decrit une PIECE, et laisse tel quel il rebatissait un corridor a chaque
+     essai. Le mode matiere garde la palette et l'etalonnage, et remplace la
+     piece par la surface.
      C'est de la matiere, pas une illustration du mot plafond — on ne retombe
      pas dans l'analogie qu'on vient de sortir de la page.
      Le scrim est RADIAL et non lateral : le texte occupe le milieu.
-     Cadrage a 78 % : la bande ne fait que ~340 px et le sol poli, qui est le
-     sujet, occupe les deux tiers BAS de la plaque. */
+     Cadrage a 34 % : la bande ne fait que ~340 px et les deux nappes de
+     lumiere sont dans la moitie HAUTE de la plaque. Le centre reste noir,
+     c'est la que le texte se pose. */
   .souche{ border-top:1px solid var(--line); border-bottom:1px solid var(--line);
     padding:88px 7vw; text-align:center; background-color:var(--bg);
     background-image:
       radial-gradient(66% 105% at 50% 46%, rgba(8,11,17,0.80) 0%, rgba(8,11,17,0.58) 55%, rgba(8,11,17,0.18) 100%),
-      url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-souche-pierre-noire.jpg');
+      url('https://s1dupuis-spec.github.io/switch-landing/assets/lp-souche-plancher-lumiere.jpg');
     background-size:cover, cover;
-    background-position:center, center 78%;
+    background-position:center, center 34%;
     background-repeat:no-repeat; }
   .souche p{ font-weight:700; font-size:clamp(26px,4vw,44px); line-height:1.22; letter-spacing:-1px; color:#fff; max-width:920px; margin:0 auto; }
   .souche .accent{ color:var(--blue); }
