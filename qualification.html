@@ -108,16 +108,49 @@
     <div class="eyebrow">Étape 2 sur 2 · Qualification approfondie</div>
     <h1>Maintenant on regarde si ton profil est calibré.</h1>
     <p class="hello" id="hello">Tu as fait l'étape 1. On continue.</p>
-    <p class="intro">Ce qui suit prend <b>4 minutes</b>. 5 sections. Réponds avec précision, l'intervenant lit chaque ligne. Si ton profil correspond au protocole SWITCH, tu reçois un lien de réservation sous 24 h ouvrables. Sinon, tu reçois une orientation honnête vers la ressource appropriée.</p>
+    <p class="intro">Ce qui suit prend <b>4 minutes</b>. 6 sections. Réponds avec précision, l'intervenant lit chaque ligne. Si ton profil correspond au protocole SWITCH, tu reçois un lien de réservation sous 24 h ouvrables. Sinon, tu reçois une orientation honnête vers la ressource appropriée.</p>
 
     <form id="qualForm" novalidate>
-      <!-- hidden (URL params GHL) -->
+      <!-- contact_id : rempli depuis les paramètres d'URL quand GHL les transmet -->
       <input type="hidden" name="contact_id" id="h_contact_id">
-      <input type="hidden" name="prenom" id="h_prenom">
-      <input type="hidden" name="nom" id="h_nom">
-      <input type="hidden" name="email" id="h_email">
-      <input type="hidden" name="telephone" id="h_telephone">
-      <input type="hidden" name="ville" id="h_ville">
+
+      <!-- SECTION 01
+           Ces champs étaient cachés et alimentés UNIQUEMENT par les paramètres
+           d'URL. Quand GHL ne les transmet pas, ils arrivent vides : le courriel
+           part quand même, mais l'action « Créer/mettre à jour un contact » n'a
+           aucun courriel sur quoi s'accrocher et RIEN n'est écrit dans le CRM.
+           Ils sont donc visibles et obligatoires, et restent pré-remplis quand
+           les paramètres sont là. -->
+      <div class="sec">
+        <h2>01 · Tes coordonnées</h2>
+        <div class="stime">20 secondes</div>
+
+        <div class="field">
+          <label class="q">Prénom <span class="req">*</span></label>
+          <input type="text" name="prenom" id="h_prenom" autocomplete="given-name" required>
+        </div>
+
+        <div class="field">
+          <label class="q">Nom <span class="req">*</span></label>
+          <input type="text" name="nom" id="h_nom" autocomplete="family-name" required>
+        </div>
+
+        <div class="field">
+          <label class="q">Courriel <span class="req">*</span></label>
+          <input type="email" name="email" id="h_email" autocomplete="email" required>
+          <span class="hint">Utilise le même qu'à l'étape 1, pour qu'on rattache tes réponses à ton dossier.</span>
+        </div>
+
+        <div class="field">
+          <label class="q">Téléphone</label>
+          <input type="tel" name="telephone" id="h_telephone" autocomplete="tel" placeholder="Optionnel">
+        </div>
+
+        <div class="field">
+          <label class="q">Ville</label>
+          <input type="text" name="ville" id="h_ville" autocomplete="address-level2" placeholder="Optionnel">
+        </div>
+      </div>
 
       <!-- SECTION 02 -->
       <div class="sec">
