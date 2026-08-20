@@ -44,7 +44,12 @@
   .lede b{ color:var(--white); font-weight:600; }
 
   /* BOOKING PANEL */
+  /* min-height sur le CONTENEUR, pas seulement sur l'iframe : form_embed.js met
+     le widget en position:absolute pendant son chargement, ce qui fait retomber
+     .booking à 2 px. Sans ce plancher, la hauteur remontée au parent n'inclut
+     pas le calendrier et la page arrive tronquée dans l'embed GHL. */
   .booking{ max-width:1040px; margin:40px auto 0; background:#ffffff; border-radius:16px;
+    min-height:720px;
     border:1px solid var(--line); overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.45); }
   .booking iframe{ width:100%; min-height:720px; border:none; display:block; }
 
