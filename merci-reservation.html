@@ -96,8 +96,25 @@
 </footer>
 
 <script>
-function _swH(){parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*");}
-window.addEventListener("load",_swH);window.addEventListener("resize",_swH);setInterval(_swH,800);
+/* Hauteur envoyée au parent : mesurée sur le CONTENU, jamais sur la fenêtre.
+   documentElement.scrollHeight ne descend JAMAIS sous la hauteur de l'iframe :
+   une fois une hauteur trop grande posée, elle ne redescendait plus (cliquet),
+   d'où les pages à 48 000 px. On mesure le body, et on neutralise les règles
+   en vh qui, elles, suivent la fenêtre. */
+var _swDernier = 0;
+if (window.self !== window.top){
+  document.documentElement.style.height = "auto";
+  document.documentElement.style.backgroundColor = "#080b11";
+  document.body.style.minHeight = "0";
+  var _swMain = document.querySelector("main");
+  if (_swMain) _swMain.style.flex = "none";
+}
+function _swH(){
+  var h = Math.ceil(document.body.getBoundingClientRect().height);
+  if (h && h !== _swDernier){ _swDernier = h; parent.postMessage({switchHeight:h},"*"); }
+}
+window.addEventListener("load",_swH); window.addEventListener("resize",_swH); setInterval(_swH,800);
+_swH();
 </script>
 </body>
 </html>

@@ -291,7 +291,7 @@
     <p>Ta qualification a été transmise. Tu reçois une réponse sous 24 h ouvrables. Si ton profil est calibré, tu repars avec un lien de réservation pour ton Audit d'Architecture (60 minutes, 1:1, gratuit). Sinon, une orientation honnête vers la ressource appropriée.</p>
     <p>Tu peux déjà réserver ton créneau ci-dessous.</p>
     <div class="actions">
-      <a class="btn primary" href="https://switchyourmind.ca/booking">Réserve mon Audit d'Architecture →</a>
+      <a class="btn primary" href="https://switchyourmind.ca/reservetonauditdarchitecture">Réserve mon Audit d'Architecture →</a>
     </div>
     <p class="consent">Question ou difficulté · <a href="mailto:info@switchyourmind.ca">info@switchyourmind.ca</a></p>
   </div>
@@ -306,7 +306,7 @@
 <script>
   // ⚠️ COLLER ICI L'URL DU WEBHOOK GHL (Inbound Webhook du workflow "Qualification Étape 2")
   const GHL_WEBHOOK_URL_QUALIFICATION = "";
-  const BOOKING_URL = "https://switchyourmind.ca/booking";
+  const BOOKING_URL = "https://switchyourmind.ca/reservetonauditdarchitecture";
 
   // Pré-remplissage des champs cachés depuis l'URL (params GHL)
   (function prefill(){
@@ -363,8 +363,25 @@
   });
 
   // Reporter de hauteur pour l'iframe parent (intégration GHL)
-  function _swH(){ parent.postMessage({switchHeight:document.documentElement.scrollHeight},"*"); }
-  window.addEventListener("load",_swH); window.addEventListener("resize",_swH); setInterval(_swH,800);
+/* Hauteur envoyée au parent : mesurée sur le CONTENU, jamais sur la fenêtre.
+   documentElement.scrollHeight ne descend JAMAIS sous la hauteur de l'iframe :
+   une fois une hauteur trop grande posée, elle ne redescendait plus (cliquet),
+   d'où les pages à 48 000 px. On mesure le body, et on neutralise les règles
+   en vh qui, elles, suivent la fenêtre. */
+var _swDernier = 0;
+if (window.self !== window.top){
+  document.documentElement.style.height = "auto";
+  document.documentElement.style.backgroundColor = "#080b11";
+  document.body.style.minHeight = "0";
+  var _swMain = document.querySelector("main");
+  if (_swMain) _swMain.style.flex = "none";
+}
+function _swH(){
+  var h = Math.ceil(document.body.getBoundingClientRect().height);
+  if (h && h !== _swDernier){ _swDernier = h; parent.postMessage({switchHeight:h},"*"); }
+}
+window.addEventListener("load",_swH); window.addEventListener("resize",_swH); setInterval(_swH,800);
+_swH();
 </script>
 </body>
 </html>
