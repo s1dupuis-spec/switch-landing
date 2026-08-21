@@ -108,7 +108,7 @@
     <div class="eyebrow">Étape 2 sur 2 · Qualification approfondie</div>
     <h1>Maintenant on regarde si ton profil est calibré.</h1>
     <p class="hello" id="hello">Tu as fait l'étape 1. On continue.</p>
-    <p class="intro">Ce qui suit prend <b>4 minutes</b>. 6 sections. Réponds avec précision, l'intervenant lit chaque ligne. Si ton profil correspond au protocole SWITCH, tu reçois un lien de réservation sous 24 h ouvrables. Sinon, tu reçois une orientation honnête vers la ressource appropriée.</p>
+    <p class="intro">Ce qui suit prend <b>4 minutes</b>. <span id="nb-sections">5</span> sections. Réponds avec précision, l'intervenant lit chaque ligne. Si ton profil correspond au protocole SWITCH, tu reçois un lien de réservation sous 24 h ouvrables. Sinon, tu reçois une orientation honnête vers la ressource appropriée.</p>
 
     <form id="qualForm" novalidate>
       <!-- contact_id : rempli depuis les paramètres d'URL quand GHL les transmet -->
@@ -121,7 +121,7 @@
            aucun courriel sur quoi s'accrocher et RIEN n'est écrit dans le CRM.
            Ils sont donc visibles et obligatoires, et restent pré-remplis quand
            les paramètres sont là. -->
-      <div class="sec">
+      <div class="sec" id="sec-coordonnees">
         <h2>01 · Tes coordonnées</h2>
         <div class="stime">20 secondes</div>
 
@@ -348,6 +348,23 @@
     const p = new URLSearchParams(location.search);
     const map = { contact_id:"h_contact_id", prenom:"h_prenom", nom:"h_nom", email:"h_email", telephone:"h_telephone", ville:"h_ville" };
     for (const k in map){ const v = p.get(k); if (v) document.getElementById(map[k]).value = v; }
+
+    /* La section « Tes coordonnées » n'existe QUE comme filet.
+       Quand l'étape 1 transmet l'identité par l'URL, on ne redemande rien : la
+       section se masque et ses champs cessent d'être obligatoires (un champ
+       requis mais caché bloquerait la validation sans rien afficher).
+       Quand les paramètres manquent, elle s'affiche — sinon le formulaire part
+       sans courriel, GHL n'a personne à qui rattacher les réponses, et on
+       fabrique un contact fantôme comme le 2026-08-20. */
+    const identiteRecue = ["h_prenom","h_nom","h_email"].every(id => document.getElementById(id).value.trim() !== "");
+    const sec = document.getElementById("sec-coordonnees");
+    if (identiteRecue){
+      sec.style.display = "none";
+      ["h_prenom","h_nom","h_email"].forEach(id => document.getElementById(id).required = false);
+    } else {
+      document.getElementById("nb-sections").textContent = "6";
+    }
+
     const prenom = p.get("prenom");
     if (prenom) document.getElementById("hello").textContent = "Bienvenue " + prenom + ". Tu as fait l'étape 1. On continue.";
   })();
