@@ -303,9 +303,26 @@
         </div>
 
         <div class="field">
-          <label class="q">Comment as-tu entendu parler de SWITCH ?</label>
-          <span class="hint">Optionnel. Ex : LinkedIn · référence d'un proche · article.</span>
-          <input type="text" name="comment-trouve" placeholder="Optionnel">
+          <label class="q">Comment as-tu découvert SWITCH ?</label>
+          <span class="hint">Obligatoire. Ça nous dit où continuer à parler.</span>
+          <select name="comment-trouve" id="h_trouve" required>
+            <option value="">Choisis une réponse</option>
+            <option value="facebook_personal">Facebook · profil de Sébastien</option>
+            <option value="facebook_page">Facebook · Page SWITCH</option>
+            <option value="instagram">Instagram</option>
+            <option value="meta_ads">Une publicité Facebook ou Instagram</option>
+            <option value="google">Google</option>
+            <option value="youtube">YouTube</option>
+            <option value="referral">Quelqu'un me l'a recommandé</option>
+            <option value="event">Un événement ou une conférence</option>
+            <option value="other">Autre</option>
+          </select>
+        </div>
+
+        <div class="field" id="field-trouve-detail" style="display:none">
+          <label class="q">Précise</label>
+          <span class="hint">En quelques mots.</span>
+          <input type="text" name="comment-trouve-detail" id="h_trouve_detail" placeholder="Où exactement ?">
         </div>
       </div>
 
@@ -369,6 +386,100 @@
     if (prenom) document.getElementById("hello").textContent = "Bienvenue " + prenom + ". Tu as fait l'étape 1. On continue.";
   })();
 
+  /* ─────────────────────────────────────────────────────────────────────
+     ATTRIBUTION SWITCH · capture UTM, premier et dernier contact.
+     Schéma : SWITCH-MARKETING-OS/attribution/SCHEMA.md
+
+     Cette page vit dans une IFRAME servie par GitHub Pages, à l'intérieur
+     d'une page GHL d'une AUTRE ORIGINE. Deux conséquences qui commandent tout :
+
+       1. La page parente recopie sa query string dans le src de l'iframe.
+          Les UTM posés sur switchyourmind.ca arrivent donc ici tout seuls.
+       2. On ne peut PAS appeler fbq() du parent : origines différentes.
+          On lui envoie un postMessage, exactement comme pour la hauteur.
+
+     Le premier contact ne s'écrase JAMAIS. Le dernier suit chaque visite
+     identifiable. Le déclaré vit ailleurs et ne touche ni l'un ni l'autre.
+     ───────────────────────────────────────────────────────────────────── */
+  var SW_ATTR = (function(){
+    var CLE_FIRST = "switch_first_touch", CLE_LAST = "switch_last_touch";
+    var CHAMPS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
+
+    function stockage(){
+      // Navigation privée ou cookies bloqués : localStorage peut lever.
+      // On dégrade sans jamais casser le formulaire.
+      try { var t="__sw"; localStorage.setItem(t,"1"); localStorage.removeItem(t); return localStorage; }
+      catch(e){ return null; }
+    }
+    var LS = stockage();
+
+    function lire(cle){
+      if (!LS) return null;
+      try { return JSON.parse(LS.getItem(cle) || "null"); } catch(e){ return null; }
+    }
+    function ecrire(cle, val){ if (LS){ try { LS.setItem(cle, JSON.stringify(val)); } catch(e){} } }
+
+    /* Une visite est « identifiable » quand elle porte au moins utm_source.
+       Une visite DIRECTE n'en est pas une : elle ne doit RIEN écraser, ni le
+       premier contact ni le dernier. Sinon un prospect qui revient par un
+       favori effacerait la source qui l'a amené. */
+    function depuisUrl(){
+      var p = new URLSearchParams(location.search), o = {}, vu = false;
+      CHAMPS.forEach(function(k){ var v = p.get(k); if (v){ o[k] = v; vu = true; } });
+      if (!vu) return null;
+      o.landing_page = document.referrer || location.href;
+      o.date = new Date().toISOString();
+      return o;
+    }
+
+    var maintenant = depuisUrl();
+    var first = lire(CLE_FIRST);
+    var last  = lire(CLE_LAST);
+
+    if (maintenant){
+      if (!first){ first = maintenant; ecrire(CLE_FIRST, first); }   // jamais écrasé
+      last = maintenant; ecrire(CLE_LAST, last);                     // toujours à jour
+    }
+
+    return {
+      first: first, last: last,
+      payload: function(){
+        var d = {};
+        if (first){
+          d.first_touch_source   = first.utm_source   || "";
+          d.first_touch_medium   = first.utm_medium   || "";
+          d.first_touch_campaign = first.utm_campaign || "";
+          d.first_touch_content  = first.utm_content  || "";
+          d.first_touch_term     = first.utm_term     || "";
+          d.first_touch_date     = first.date         || "";
+          d.landing_page         = first.landing_page || "";
+        }
+        if (last){
+          d.last_touch_source   = last.utm_source   || "";
+          d.last_touch_medium   = last.utm_medium   || "";
+          d.last_touch_campaign = last.utm_campaign || "";
+          d.last_touch_content  = last.utm_content  || "";
+          d.last_touch_term     = last.utm_term     || "";
+        }
+        return d;
+      }
+    };
+  })();
+
+  /* Le champ de précision n'apparaît que sur « Autre », et il n'est JAMAIS
+     required : un champ requis mais masqué bloque checkValidity() sans rien
+     afficher. Défaut déjà rencontré sur cette page le 2026-08-20. */
+  (function detailProvenance(){
+    var sel = document.getElementById("h_trouve");
+    var box = document.getElementById("field-trouve-detail");
+    if (!sel || !box) return;
+    sel.addEventListener("change", function(){
+      box.style.display = (sel.value === "other") ? "" : "none";
+      if (sel.value !== "other") document.getElementById("h_trouve_detail").value = "";
+      if (typeof _swH === "function") _swH();
+    });
+  })();
+
   const form = document.getElementById("qualForm");
   const errMsg = document.getElementById("errMsg");
   const submitBtn = document.getElementById("submitBtn");
@@ -389,16 +500,29 @@
     data.step = "qualification_etape_2";
     data.submitted_at = new Date().toISOString();
 
+      /* ATTRIBUTION. Le declare vient du <select>, il est deja dans data sous
+         « comment-trouve ». On y ajoute l'OBSERVE, qui vient des UTM. Les deux
+         voyagent separement et ne se melangent jamais. */
+      var _attr = SW_ATTR.payload();
+      for (var _k in _attr) data[_k] = _attr[_k];
+
     submitBtn.disabled = true;
     submitBtn.textContent = "Envoi...";
 
-    try{
+    /* envoiReussi commande le Lead, PAS l'ecran de succes. Les deux etaient
+         confondus : un POST en echec affichait quand meme le succes, ce qui
+         aurait compte un lead inexistant. On garde l'ecran de succes en toutes
+         circonstances pour ne pas bloquer le prospect, et on ne declenche le
+         Lead que sur un vrai envoi. */
+      var envoiReussi = false;
+      try{
       if (GHL_WEBHOOK_URL_QUALIFICATION){
-        await fetch(GHL_WEBHOOK_URL_QUALIFICATION, {
+        var rep = await fetch(GHL_WEBHOOK_URL_QUALIFICATION, {
           method:"POST",
           headers:{ "Content-Type":"application/json" },
           body:JSON.stringify(data)
         });
+          envoiReussi = !!(rep && rep.ok);
       } else {
         console.warn("GHL_WEBHOOK_URL_QUALIFICATION vide : aucune soumission envoyée. Colle l'URL du webhook.");
       }
@@ -408,7 +532,26 @@
       // la donnee reste recuperable cote support si besoin.
     }
 
-    document.getElementById("formView").style.display = "none";
+    /* Le parent porte le pixel Meta et nous sommes sur une AUTRE ORIGINE :
+         impossible d'appeler fbq() d'ici. On lui envoie un message, comme pour
+         la hauteur, et c'est LUI qui declenche le Lead.
+
+         SW_LEAD_ENVOYE empeche un double comptage si le handler repasse. Un
+         rechargement repart du formulaire, pas de l'ecran de succes : il ne
+         peut donc pas produire un second Lead. */
+      if (envoiReussi && !window.SW_LEAD_ENVOYE){
+        window.SW_LEAD_ENVOYE = true;
+        try {
+          parent.postMessage({
+            switchLead: true,
+            source: (SW_ATTR.last && SW_ATTR.last.utm_source) || "",
+            declare: data["comment-trouve"] || "",
+            at: new Date().toISOString()
+          }, "*");
+        } catch(e){ console.error("postMessage Lead impossible", e); }
+      }
+
+      document.getElementById("formView").style.display = "none";
     document.getElementById("successView").style.display = "block";
     window.scrollTo({ top:0, behavior:"smooth" });
     _swH();
